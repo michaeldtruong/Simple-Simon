@@ -43,3 +43,8 @@
 #green:hover {
 	opacity: 0.5;
 }
+
+.weapons {
+	display: block;
+	width: 150px;
+}

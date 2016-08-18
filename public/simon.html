@@ -14,8 +14,6 @@
         <div class="container">
             <div class="debug">
                 <button id="playSequence">Play Sequence</button>
-                <button id="increaseTemp">Increase Temp</button>
-                <button id="decreaseTemp">Decrease Temp</button>
                 <div id="displayHealth"></div>
                 <div id="displayHealthE"></div>
                 <div id="displayTemp"></div>
@@ -42,10 +40,11 @@
                     "capacity": null,
                     "weapons": [
                         {
-                            "name": "Force Coolant",
+                            "name": "Force-Coolant",
                             "damage": 0,
                             "heatGeneration": 0,
                             "castingTime": 0,
+                            "coolDown": 0,
                             "special": function() {
                                 engineTemp -= 3;
                                 $("#displayTemp").html("Temp: " + engineTemp);
@@ -54,10 +53,11 @@
                                 console.log(this.name + " animation");
                             }
                         }, {
-                            "name": "Proton Cannon",
+                            "name": "Proton-Cannon",
                             "damage": 300,
                             "heatGeneration": 3,
                             "castingTime": 2,
+                            "coolDown": 0,
                             "special": function() {
                                 console.log(this.name + " special");
                             },
@@ -65,10 +65,11 @@
                                 console.log(this.name + " animation");
                             } 
                         }, {
-                            "name": "Rail Gun",
+                            "name": "Rail-Gun",
                             "damage": 50,
                             "heatGeneration": 1,
                             "castingTime": 0,
+                            "coolDown": 0,
                             "special": function() {
                                 console.log(this.name + " special");
                             },
@@ -80,6 +81,7 @@
                             "damage": 0,
                             "heatGeneration": 0,
                             "castingTime": 0,
+                            "coolDown": 0,
                             "special": function() {
                                 console.log(this.name + " special");
                             },
@@ -96,10 +98,11 @@
                     "capacity": null,
                     "weapons": [
                         {
-                            "name": "Force Coolant",
+                            "name": "Force-Coolant",
                             "damage": 0,
                             "heatGeneration": 0,
                             "castingTime": 0,
+                            "coolDown": 0,
                             "special": function() {
                                 engineTemp -= 3;
                                 $("#displayTemp").html("Temp: " + engineTemp);
@@ -108,10 +111,11 @@
                                 console.log(this.name + " animation");
                             }
                         }, {
-                            "name": "Proton Cannon",
+                            "name": "Proton-Cannon",
                             "damage": 300,
                             "heatGeneration": 3,
                             "castingTime": 2,
+                            "coolDown": 0,
                             "special": function() {
                                 console.log(this.name + " special");
                             },
@@ -119,10 +123,11 @@
                                 console.log(this.name + " animation");
                             } 
                         }, {
-                            "name": "Rail Gun",
+                            "name": "Rail-Gun",
                             "damage": 50,
                             "heatGeneration": 1,
                             "castingTime": 0,
+                            "coolDown": 0,
                             "special": function() {
                                 console.log(this.name + " special");
                             },
@@ -134,6 +139,7 @@
                             "damage": 0,
                             "heatGeneration": 0,
                             "castingTime": 0,
+                            "coolDown": 0,
                             "special": function() {
                                 console.log(this.name + " special");
                             },
@@ -146,8 +152,8 @@
             ];
             var sequence = [];
             var health = ships[0].hp;
-            var healthEmemy = ships[1].hp;
-            var engineTemp = 3;
+            var healthEnemy = ships[1].hp;
+            var engineTemp = 1;
             var speed = 1000;
             var iteration = 1;
             var input;
@@ -166,7 +172,7 @@
                 document.getElementsByClassName("buttons")[3].disabled = false;  
             }
 
-            function outputSequence(step, i) {
+            function outputSequence(step) {
                 switch (step) {
                     case 1:
                      $("#but1").animate({
@@ -213,6 +219,7 @@
                 } if (sequence.length == 0) {
                     console.log("got it");
                     disableInput();
+                    drawWeaponMenu();
                 }
             }
 
@@ -230,29 +237,45 @@
                 }
             }
 
-            function increaseTemp() {
-                engineTemp += 1;
-                $("#displayTemp").html("Temp: " + engineTemp);
+            function increaseTemp(input) {
+                engineTemp += input;
             }
 
-            function decreaseTemp() {
-                engineTemp -= 1;
+            function decreaseTemp(input) {
+                engineTemp -= input;
+            }
+
+            function drawStatus() {
                 $("#displayTemp").html("Temp: " + engineTemp);
+                $("#displayHealth").html("HP: " + health);
+                $("#displayHealthE").html("Enemy HP: " + healthEnemy);
             }
 
             function drawWeaponMenu() {
                 for (var i = 0; i < ships[0].weapons.length; i++) {
-                    $(".weaponMenu").append("<button class='weapons'>" + ships[0].weapons[i].name + "</button>");
+                    $(".weaponMenu").append("<button class='weapons' id='" + ships[0].weapons[i].name + "'>" + ships[0].weapons[i].name + "</button>");
+                    $(".weaponMenu").css("display", "block");
                     console.log(ships[0].weapons[i].name);
                 }
+                $(".weapons").click(function(e) {
+                    for (var i = 0; i < ships[0].weapons.length; i++) {
+                        if ($(this).attr('id') == ships[0].weapons[i].name) {
+                            console.log(ships[0].weapons[i]);
+                            healthEnemy -= ships[0].weapons[i].damage;
+                            engineTemp += ships[0].weapons[i].heatGeneration;
+                            ships[0].weapons[i].special();
+                            ships[0].weapons[i].animation();
+                            drawStatus();
+                            $(".weaponMenu").html("");
+                            $(".weaponMenu").css("display", "none");
+                        }
+                    }
+                });
             }
-
-            drawWeaponMenu();
+  
             disableInput();
+            drawStatus();
 
-            $("#displayHealth").html("HP: " + health);
-            $("#displayHealthE").html("Enemy HP: " + healthEmemy);
-            
             $("#but1").click(function(e) {
                 checkInput(1);
             });
@@ -268,12 +291,8 @@
             $("#playSequence").click(function(e) {
                 startSequence();
             });
-            $("#increaseTemp").click(function(e) {
-                increaseTemp();
-            });
-            $("#decreaseTemp").click(function(e) {
-                decreaseTemp();
-            });
+
+
 
         </script>
     </body>
