@@ -1,0 +1,45 @@
+.container {
+	width: 1024px;
+	height: 700px;
+	position: relative;
+	top: 60px;
+}
+
+.shipMain {
+	position: absolute;
+	left: 320px;
+	top: 100px;
+	width: 420px;
+	height: 50px;
+}
+
+.buttons {
+	width: 100px;
+	height: 50px;
+	border: 1px solid black;
+	outline: none;
+}
+
+#but1 {
+	background-color: green;
+
+}
+
+#but2 {
+	background-color: red;
+
+}
+
+#but3 {
+	background-color: blue;
+
+}
+
+#but4 {
+	background-color: yellow;
+
+}
+
+#green:hover {
+	opacity: 0.5;
+}

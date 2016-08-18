@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Simon</title>
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+        <link href="/css/simon.css" rel="stylesheet">
+
+    </head>
+    <body>
+        <div class="container">
+            <div class="debug">
+                <button id="playSequence">Play Sequence</button>
+                <button id="increaseTemp">Increase Temp</button>
+                <button id="decreaseTemp">Decrease Temp</button>
+                <div id="displayHealth"></div>
+                <div id="displayTemp"></div>
+            </div>
+            <div class="shipMain">
+                <button class ="buttons" id="but1"></button>
+                <button class ="buttons" id="but2"></button>
+                <button class ="buttons" id="but3"></button>
+                <button class ="buttons" id="but4"></button>
+            </div>
+        </div>
+        
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+        <script>
+            "use strict";
+
+            var sequence = [];
+            var health = 1000;
+            var engineTemp = 3;
+            var speed = 1000;
+            var iteration = 1;
+            var input;
+
+            function disableInput() {
+                document.getElementsByClassName("buttons")[0].disabled = true;
+                document.getElementsByClassName("buttons")[1].disabled = true;
+                document.getElementsByClassName("buttons")[2].disabled = true;
+                document.getElementsByClassName("buttons")[3].disabled = true;
+            }
+
+            function ableInput() {
+                document.getElementsByClassName("buttons")[0].disabled = false;
+                document.getElementsByClassName("buttons")[1].disabled = false;
+                document.getElementsByClassName("buttons")[2].disabled = false;
+                document.getElementsByClassName("buttons")[3].disabled = false;  
+            }
+
+            function outputSequence(step, i) {
+                switch (step) {
+                    case 1:
+                     $("#but1").animate({
+                        opacity: "0.3"
+                     }, 300).animate({
+                        opacity: "1"
+                     }, 300);
+                     break;
+                     case 2:
+                     $("#but2").animate({
+                        opacity: "0.3"
+                     }, 300).animate({
+                        opacity: "1"
+                     }, 300);
+                     break;
+                     case 3:
+                     $("#but3").animate({
+                        opacity: "0.3"
+                     }, 300).animate({
+                        opacity: "1"
+                     }, 300);
+                     break;
+                     case 4:
+                     $("#but4").animate({
+                        opacity: "0.3"
+                     }, 300).animate({
+                        opacity: "1"
+                     }, 300);
+                     break;
+                }
+            }
+
+            function checkInput(input) {
+                $("#but" + input).animate({
+                        opacity: "0.3"
+                     }, 300).animate({
+                        opacity: "1"
+                     }, 300);
+                if (input == sequence[0]) {
+                    sequence.shift(sequence[0]);
+                    console.log(sequence);
+                } else {
+                    console.log("wrong")
+                } if (sequence.length == 0) {
+                    console.log("got it");
+                    disableInput();
+                }
+            }
+
+            function startSequence() {
+                disableInput();
+                var step = Math.floor((Math.random() * 4) + 1);
+                sequence.push(step);
+                outputSequence(step, iteration);  
+                console.log(sequence);
+                if (iteration++ < engineTemp) {
+                    setTimeout(startSequence, speed);
+                } else if (iteration == engineTemp + 1) {
+                    iteration = 1;
+                    ableInput();
+                }
+            }
+
+            function increaseTemp() {
+                engineTemp += 1;
+                $("#displayTemp").html("Temp: " + engineTemp);
+            }
+
+            function decreaseTemp() {
+                engineTemp -= 1;
+                $("#displayTemp").html("Temp: " + engineTemp);
+            }
+
+            var ships = [
+            {
+                "name": "Regalia",
+                "health": 1200,
+                "speed": 1000,
+                "capacity": null,
+                "weapons": [
+                {
+                    "name": "Force Coolant",
+                    "damage": 0,
+                    "heatGeneration": 0,
+                    "castingTime": 0,
+                    "special": function() {
+                        engineTemp -= 3;
+                        $("#displayTemp").html("Temp: " + engineTemp);
+                    },
+                    "animation": function() {
+                        console.log(this.name + " animation");
+                    }
+                }, {
+                    "name": "Proton Cannon",
+                    "damage": 300,
+                    "heatGeneration": 3,
+                    "castingTime": 2,
+                    "special": function() {
+                        console.log(this.name + " special");
+                    },
+                    "animation": function() {
+                        console.log(this.name + " animation");
+                    } 
+
+                }, {}, {}]
+
+
+            }, {}];
+
+            disableInput();
+
+            $("#displayHealth").html("HP: " + health);
+            
+            $("#but1").click(function(e) {
+                checkInput(1);
+            });
+            $("#but2").click(function(e) {
+                checkInput(2);
+            });
+            $("#but3").click(function(e) {
+                checkInput(3);
+            });
+            $("#but4").click(function(e) {
+                checkInput(4);
+            });
+            $("#playSequence").click(function(e) {
+                startSequence();
+            });
+            $("#increaseTemp").click(function(e) {
+                increaseTemp();
+            });
+            $("#decreaseTemp").click(function(e) {
+                decreaseTemp();
+            });
+
+        </script>
+    </body>
+</html>
