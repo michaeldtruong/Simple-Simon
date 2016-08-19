@@ -28,6 +28,7 @@
             </div>
             <div class="weaponMenu"></div>
             <div class="battleLog"></div>
+            <div class="battleLog2"></div>
         </div>
         
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
@@ -57,7 +58,7 @@
                                 }
                             },
                             "animation": function() {
-                                console.log(this.name + " animation");
+                                console.log("Player: " + this.name + " animation");
                             }
                         }, {
                             "name": "Proton-Cannon",
@@ -66,10 +67,10 @@
                             "castingTime": 2,
                             "coolDown": 0,
                             "special": function() {
-                                console.log(this.name + " special");
+                                console.log("Player: " + this.name + " special");
                             },
                             "animation": function() {
-                                console.log(this.name + " animation");
+                                console.log("Player: " + this.name + " animation");
                             } 
                         }, {
                             "name": "Rail-Gun",
@@ -78,10 +79,10 @@
                             "castingTime": 0,
                             "coolDown": 0,
                             "special": function() {
-                                console.log(this.name + " special");
+                                console.log("Player: " + this.name + " special");
                             },
                             "animation": function() {
-                                console.log(this.name + " animation");
+                                console.log("Player: " + this.name + " animation");
                             }
                         }, {
                             "name": "Barrier",
@@ -90,10 +91,10 @@
                             "castingTime": 0,
                             "coolDown": 0,
                             "special": function() {
-                                console.log(this.name + " special");
+                                console.log("Player: " + this.name + " special");
                             },
                             "animation": function() {
-                                console.log(this.name + " animation");
+                                console.log("Player: " + this.name + " animation");
                             }
                         }
                     ]
@@ -118,7 +119,7 @@
                                 }
                             },
                             "animation": function() {
-                                console.log(this.name + " animation");
+                                console.log("Enemy: " + this.name + " animation");
                             }
                         }, {
                             "name": "Proton-Cannon",
@@ -127,10 +128,10 @@
                             "castingTime": 2,
                             "coolDown": 0,
                             "special": function() {
-                                console.log(this.name + " special");
+                                console.log("Enemy: " + this.name + " special");
                             },
                             "animation": function() {
-                                console.log(this.name + " animation");
+                                console.log("Enemy: " + this.name + " animation");
                             } 
                         }, {
                             "name": "Rail-Gun",
@@ -139,10 +140,10 @@
                             "castingTime": 0,
                             "coolDown": 0,
                             "special": function() {
-                                console.log(this.name + " special");
+                                console.log("Enemy: " + this.name + " special");
                             },
                             "animation": function() {
-                                console.log(this.name + " animation");
+                                console.log("Enemy: " + this.name + " animation");
                             }
                         }, {
                             "name": "Particle-Ray",
@@ -151,15 +152,16 @@
                             "castingTime": 0,
                             "coolDown": 0,
                             "special": function() {
-                                console.log(this.name + " special");
+                                console.log("Enemy: " + this.name + " special");
                             },
                             "animation": function() {
-                                console.log(this.name + " animation");
+                                console.log("Enemy: " + this.name + " animation");
                             }
                         }
                     ]
                 }
             ];
+            
             var sequence = [];
             var healthPlayer = ships[0].hp;
             var healthEnemy = ships[1].hp;
@@ -167,7 +169,9 @@
             var engineTempEnemy = 1;
             var speed = 400;
             var iteration = 1;
+            var enemyTurnCounter = 5;
             var input;
+            var enemyTurnTimer;
 
             function disableInput() {
                 document.getElementsByClassName("buttons")[0].disabled = true;
@@ -231,13 +235,14 @@
                     console.log("got it");
                     disableInput();
                     drawWeaponMenu();
+                    clearInterval(enemyTurnTimer);
                 }
             }
 
             function startSequence() {
                 $(".statusBox").animate({
                         backgroundColor: "yellow"
-                     }, 200);
+                     }, 70);
                 disableInput();
                 var step = Math.floor((Math.random() * 4) + 1);
                 sequence.push(step);
@@ -251,7 +256,7 @@
                     ableInput();
                     $(".statusBox").animate({
                         backgroundColor: "green"
-                     }, 200);
+                     }, 70);
                 }
             }
 
@@ -281,32 +286,37 @@
                             $(".weaponMenu").html("");
                             $(".weaponMenu").css("display", "none");
                             startSequence();
+                            runEnemyTurn();
                         }
                     }
                 });
             }
 
             function enemyTurn() {
+                enemyTurnCounter--;
+                console.log(enemyTurnCounter);
                 var enemyChoice = Math.floor((Math.random() * (ships[1].weapons.length - 1)) + 1);
-                if (engineTempEnemy > 7) {
+                if (engineTempEnemy > 7 && enemyTurnCounter == 0) {
                     ships[1].weapons[0].special();
                     drawStatus();
-                    console.log("Force-Coolant")
-                } else {
+                    enemyTurnCounter = 5;
+                    // console.log("Force-Coolant")
+                } else if (enemyTurnCounter == 0) {
                     healthPlayer -= ships[1].weapons[enemyChoice].damage;
                     engineTempEnemy += ships[1].weapons[enemyChoice].heatGeneration;
                     ships[1].weapons[enemyChoice].special();
                     ships[1].weapons[enemyChoice].animation();
+                    enemyTurnCounter = 5;
                     drawStatus();
                     $(".battleLog").html("The enemy uses " + ships[0].weapons[enemyChoice].name);
-                    console.log(enemyChoice);
+                    // console.log(enemyChoice);
                 }
             }
 
             function runEnemyTurn() {
-                setInterval(enemyTurn, 2000);
+                enemyTurnTimer = setInterval(enemyTurn, 1000);
             }
-  
+
             disableInput();
             drawStatus();
 
@@ -324,6 +334,7 @@
             });
             $("#playSequence").click(function(e) {
                 startSequence();
+                runEnemyTurn();
             });
 
         </script>

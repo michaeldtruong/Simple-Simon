@@ -3,6 +3,7 @@
 	height: 700px;
 	position: relative;
 	top: 60px;
+	border: 1px solid black;
 }
 
 .shipMain {
@@ -59,8 +60,8 @@
 }
 
 .battleLog {
-	position: fixed;
-	left: 540px;
-	top: 300px;
+	position: absolute;
+	left: 480px;
+	top: 200px;
 	width: 260px;
 }
