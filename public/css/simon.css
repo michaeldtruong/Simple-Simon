@@ -20,6 +20,15 @@
 	outline: none;
 }
 
+.statusBox {
+	width: 20px;
+	height: 20px;
+	position: absolute;
+	bottom: 70px;
+	left: 52px;
+	background-color: gray;
+}
+
 #but1 {
 	background-color: green;
 
@@ -47,4 +56,11 @@
 .weapons {
 	display: block;
 	width: 150px;
+}
+
+.battleLog {
+	position: fixed;
+	left: 540px;
+	top: 300px;
+	width: 260px;
 }

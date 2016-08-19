@@ -15,19 +15,23 @@
             <div class="debug">
                 <button id="playSequence">Play Sequence</button>
                 <div id="displayHealth"></div>
-                <div id="displayHealthE"></div>
                 <div id="displayTemp"></div>
+                <div id="displayHealthE"></div>
+                <div id="displayTempEnemy"></div>
             </div>
             <div class="shipMain">
+                <div class="statusBox"></div>
                 <button class ="buttons" id="but1"></button>
                 <button class ="buttons" id="but2"></button>
                 <button class ="buttons" id="but3"></button>
                 <button class ="buttons" id="but4"></button>
             </div>
             <div class="weaponMenu"></div>
+            <div class="battleLog"></div>
         </div>
         
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+        <script   src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"   integrity="sha256-eGE6blurk5sHj+rmkfsGYeKyZx3M4bG+ZlFyA7Kns7E="   crossorigin="anonymous"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
         <script>
             "use strict";
@@ -46,8 +50,11 @@
                             "castingTime": 0,
                             "coolDown": 0,
                             "special": function() {
+                                if (engineTemp <= 3) {
+                                    engineTemp = 1;
+                                } else {
                                 engineTemp -= 3;
-                                $("#displayTemp").html("Temp: " + engineTemp);
+                                }
                             },
                             "animation": function() {
                                 console.log(this.name + " animation");
@@ -104,8 +111,11 @@
                             "castingTime": 0,
                             "coolDown": 0,
                             "special": function() {
-                                engineTemp -= 3;
-                                $("#displayTemp").html("Temp: " + engineTemp);
+                                if (engineTempEnemy <= 3) {
+                                    engineTempEnemy = 1;
+                                } else {
+                                engineTempEnemy -= 3;
+                                }
                             },
                             "animation": function() {
                                 console.log(this.name + " animation");
@@ -135,9 +145,9 @@
                                 console.log(this.name + " animation");
                             }
                         }, {
-                            "name": "Barrier",
-                            "damage": 0,
-                            "heatGeneration": 0,
+                            "name": "Particle-Ray",
+                            "damage": 150,
+                            "heatGeneration": 2,
                             "castingTime": 0,
                             "coolDown": 0,
                             "special": function() {
@@ -151,10 +161,11 @@
                 }
             ];
             var sequence = [];
-            var health = ships[0].hp;
+            var healthPlayer = ships[0].hp;
             var healthEnemy = ships[1].hp;
             var engineTemp = 1;
-            var speed = 1000;
+            var engineTempEnemy = 1;
+            var speed = 400;
             var iteration = 1;
             var input;
 
@@ -177,30 +188,30 @@
                     case 1:
                      $("#but1").animate({
                         opacity: "0.3"
-                     }, 300).animate({
+                     }, 200).animate({
                         opacity: "1"
-                     }, 300);
+                     }, 200);
                      break;
                      case 2:
                      $("#but2").animate({
                         opacity: "0.3"
-                     }, 300).animate({
+                     }, 200).animate({
                         opacity: "1"
-                     }, 300);
+                     }, 200);
                      break;
                      case 3:
                      $("#but3").animate({
                         opacity: "0.3"
-                     }, 300).animate({
+                     }, 200).animate({
                         opacity: "1"
-                     }, 300);
+                     }, 200);
                      break;
                      case 4:
                      $("#but4").animate({
                         opacity: "0.3"
-                     }, 300).animate({
+                     }, 200).animate({
                         opacity: "1"
-                     }, 300);
+                     }, 200);
                      break;
                 }
             }
@@ -208,14 +219,14 @@
             function checkInput(input) {
                 $("#but" + input).animate({
                         opacity: "0.3"
-                     }, 300).animate({
+                     }, 200).animate({
                         opacity: "1"
-                     }, 300);
+                     }, 200);
                 if (input == sequence[0]) {
                     sequence.shift(sequence[0]);
                     console.log(sequence);
                 } else {
-                    console.log("wrong")
+                    console.log("wrong");
                 } if (sequence.length == 0) {
                     console.log("got it");
                     disableInput();
@@ -224,31 +235,31 @@
             }
 
             function startSequence() {
+                $(".statusBox").animate({
+                        backgroundColor: "yellow"
+                     }, 200);
                 disableInput();
                 var step = Math.floor((Math.random() * 4) + 1);
                 sequence.push(step);
-                outputSequence(step, iteration);  
+                outputSequence(step);  
                 console.log(sequence);
                 if (iteration++ < engineTemp) {
                     setTimeout(startSequence, speed);
+                    
                 } else if (iteration == engineTemp + 1) {
                     iteration = 1;
                     ableInput();
+                    $(".statusBox").animate({
+                        backgroundColor: "green"
+                     }, 200);
                 }
-            }
-
-            function increaseTemp(input) {
-                engineTemp += input;
-            }
-
-            function decreaseTemp(input) {
-                engineTemp -= input;
             }
 
             function drawStatus() {
                 $("#displayTemp").html("Temp: " + engineTemp);
-                $("#displayHealth").html("HP: " + health);
+                $("#displayHealth").html("HP: " + healthPlayer);
                 $("#displayHealthE").html("Enemy HP: " + healthEnemy);
+                $("#displayTempEnemy").html("Enemy Temp: " + engineTempEnemy);
             }
 
             function drawWeaponMenu() {
@@ -266,11 +277,34 @@
                             ships[0].weapons[i].special();
                             ships[0].weapons[i].animation();
                             drawStatus();
+                            $(".battleLog").html("You use " + ships[0].weapons[i].name);
                             $(".weaponMenu").html("");
                             $(".weaponMenu").css("display", "none");
+                            startSequence();
                         }
                     }
                 });
+            }
+
+            function enemyTurn() {
+                var enemyChoice = Math.floor((Math.random() * (ships[1].weapons.length - 1)) + 1);
+                if (engineTempEnemy > 7) {
+                    ships[1].weapons[0].special();
+                    drawStatus();
+                    console.log("Force-Coolant")
+                } else {
+                    healthPlayer -= ships[1].weapons[enemyChoice].damage;
+                    engineTempEnemy += ships[1].weapons[enemyChoice].heatGeneration;
+                    ships[1].weapons[enemyChoice].special();
+                    ships[1].weapons[enemyChoice].animation();
+                    drawStatus();
+                    $(".battleLog").html("The enemy uses " + ships[0].weapons[enemyChoice].name);
+                    console.log(enemyChoice);
+                }
+            }
+
+            function runEnemyTurn() {
+                setInterval(enemyTurn, 2000);
             }
   
             disableInput();
@@ -291,8 +325,6 @@
             $("#playSequence").click(function(e) {
                 startSequence();
             });
-
-
 
         </script>
     </body>
