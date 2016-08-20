@@ -4,12 +4,60 @@
 	position: relative;
 	top: 60px;
 	border: 1px solid black;
+	font-family: 'Orbitron', sans-serif;
+}
+
+.enemySide {
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	width: 50%;
+	height: 100%;
+	border: 2px solid blue;
+	background-image: url(/img/dark_mosaic.png);
+}
+
+.playerSide {
+	position: absolute;
+	right: 0px;
+	top: 0px;
+	width: 50%;
+	height: 100%;
+	border: 2px solid red;
+	background-image: url(/img/dark_mosaic.png);
+}
+
+.enemyShipImg {
+	position: absolute;
+	top: 80px;
+	left: 180px;
+
+}
+
+.playerShipImg {
+	position: absolute;
+	top: 130px;
+	right: 240px;
+	
+}
+
+.hud {
+	position: absolute;
+	top: 0px;
+	left: -15px;
+
+}
+
+.debug {
+	position: absolute;
+	top: 0px;
+	left: 0px;
 }
 
 .shipMain {
 	position: absolute;
 	left: 320px;
-	top: 100px;
+	top: 590px;
 	width: 420px;
 	height: 50px;
 }
@@ -17,8 +65,9 @@
 .buttons {
 	width: 100px;
 	height: 50px;
-	border: 1px solid black;
+	border: 2px solid #ddd;
 	outline: none;
+	border-radius: 5px;
 }
 
 .statusBox {
@@ -37,20 +86,35 @@
 
 .battleLog {
 	position: absolute;
-	left: 480px;
-	top: 200px;
+	left: 30px;
+	top: 540px;
 	width: 260px;
-	height: 300px;
-	overflow: scroll;
+	height: 140px;
+	font-size: 0.8em;
+	overflow: auto;
+	border: 1px solid gray;
+	color: white;
+	background-image: url(/img/px.png);
 }
 
 .repeat {
 	position: absolute;
-	top: -45px;
-	left: 150px;
+	top: 0px;
+	left: 440px;
 	width: 50px;
-	height: 30px;
+	height: 50px;
+	border-radius: 50%;
+	opacity: 0;
 }
+
+.repeatImg {
+	position: absolute;
+	top: 0px;
+	left: 440px;
+	width: 50px;
+	height: 50px;
+}
+
 #but1 {
 	background-color: green;
 

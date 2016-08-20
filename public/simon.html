@@ -7,11 +7,11 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Simon</title>
         <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Orbitron" rel="stylesheet">
         <link href="/css/simon.css" rel="stylesheet">
 
     </head>
     <body>
-        <div class="container">
             <div class="debug">
                 <button id="playSequence">Play Sequence</button>
                 <div class="displayHealth"></div>
@@ -21,17 +21,26 @@
                 <div class="displayTempEnemy"></div>
                 <div class="displayEnergyEnemy"></div>
             </div>
-            <div class="shipMain">
-                <div class="statusBox"></div>
-                <button class="repeat"></button>
-                <button class ="buttons" id="but1"></button>
-                <button class ="buttons" id="but2"></button>
-                <button class ="buttons" id="but3"></button>
-                <button class ="buttons" id="but4"></button>
+        <div class="container">
+            <div class="enemySide">
+                <img src="/img/exodus.png" class="enemyShipImg">
             </div>
-            <div class="weaponMenu"></div>
-            <div class="battleLog"></div>
-            <div class="battleLog2"></div>
+            <div class="playerSide">
+                <img src="/img/regalia1.png" class="playerShipImg">
+            </div>
+            <div class="hud">
+                <div class="shipMain">
+                    <div class="statusBox"></div>
+                    <img src="/img/repeat.png" class="repeatImg">
+                    <button class="repeat"></button>
+                    <button class ="buttons" id="but1"></button>
+                    <button class ="buttons" id="but2"></button>
+                    <button class ="buttons" id="but3"></button>
+                    <button class ="buttons" id="but4"></button>
+                </div>
+                <div class="weaponMenu"></div>
+                <div class="battleLog"></div>
+            </div>
         </div>
         
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
@@ -47,6 +56,7 @@
                     "energy": 10,
                     "speed": 1000,
                     "engineTemp": 1,
+                    "image": "<img src='/img/regalia1.png' id='regaliaImg'>",
                     "weapons": [
                         {
                             "name": "Force-Coolant",
@@ -130,6 +140,7 @@
                     "energy": 10,
                     "speed": 1500,
                     "engineTemp": 1,
+                    "image": "<img src='/img/exodus.png' id='exodusImg'>",
                     "weapons": [
                         {
                             "name": "Force-Coolant",
