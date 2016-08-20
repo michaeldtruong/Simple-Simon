@@ -46,7 +46,7 @@
                     "hp": 1200,
                     "energy": 10,
                     "speed": 1000,
-                    "capacity": null,
+                    "engineTemp": 1,
                     "weapons": [
                         {
                             "name": "Force-Coolant",
@@ -56,10 +56,10 @@
                             "castingTime": 0,
                             "coolDown": 0,
                             "special": function() {
-                                if (engineTemp <= 3) {
-                                    engineTemp = 1;
+                                if (ships[0].engineTemp <= 3) {
+                                    ships[0].engineTemp = 1;
                                 } else {
-                                engineTemp -= 3;
+                                ships[0].engineTemp -= 3;
                                 }
                             },
                             "animation": function() {
@@ -73,7 +73,11 @@
                             "castingTime": 0,
                             "coolDown": 0,
                             "special": function() {
-                                console.log("Player: " + this.name + " special");
+                                if (ships[0].energy >= 7) {
+                                    ships[0].energy = 10;
+                                } else {
+                                ships[0].energy += 3;
+                                }
                             },
                             "animation": function() {
                                 console.log("Player: " + this.name + " animation");
@@ -125,7 +129,7 @@
                     "hp": 1700,
                     "energy": 10,
                     "speed": 1500,
-                    "capacity": null,
+                    "engineTemp": 1,
                     "weapons": [
                         {
                             "name": "Force-Coolant",
@@ -135,10 +139,10 @@
                             "castingTime": 0,
                             "coolDown": 0,
                             "special": function() {
-                                if (engineTempEnemy <= 3) {
-                                    engineTempEnemy = 1;
+                                if (ships[1].engineTemp <= 3) {
+                                    ships[1].engineTemp = 1;
                                 } else {
-                                engineTempEnemy -= 3;
+                                ships[1].engineTemp -= 3;
                                 }
                             },
                             "animation": function() {
@@ -147,12 +151,16 @@
                         }, {
                             "name": "Restore-Energy",
                             "damage": 0,
-                            "energyCost": -3,
+                            "energyCost": 0,
                             "heatGeneration": 0,
                             "castingTime": 0,
                             "coolDown": 0,
                             "special": function() {
-                                console.log("Player: " + this.name + " special");
+                                if (ships[1].energy >= 7) {
+                                    ships[1].energy = 10;
+                                } else {
+                                ships[1].energy += 3;
+                                }
                             },
                             "animation": function() {
                                 console.log("Player: " + this.name + " animation");
@@ -201,18 +209,14 @@
                 }
             ];
 
+            var playerShip = 0;
+            var enemyShip = 1;
             var sequence = [];
-            var healthPlayer = ships[0].hp;
-            var healthEnemy = ships[1].hp;
-            var engineTempPlayer = 1;
-            var engineTempEnemy = 1;
-            var energyPlayer = ships[0].energy
-            var energyEnemy = ships[1].energy
             var speed = 400;
             var iteration = 1;
             var enemyTurnCounter = 5;
-            var input;
             var enemyTurnTimer;
+            var input;
 
             function disableInput() {
                 document.getElementsByClassName("buttons")[0].disabled = true;
@@ -289,9 +293,9 @@
                 sequence.push(step);
                 outputSequence(step);  
                 console.log(sequence);
-                if (iteration++ < engineTempPlayer) {
+                if (iteration++ < ships[playerShip].engineTemp) {
                     setTimeout(startSequence, speed);
-                } else if (iteration == engineTempPlayer + 1) {
+                } else if (iteration == ships[playerShip].engineTemp + 1) {
                     iteration = 1;
                     ableInput();
                     $(".statusBox").animate({
@@ -306,9 +310,9 @@
                     }, 70);
                 disableInput();
                 outputSequence(sequence[iteration - 1]);
-                if (iteration++ < engineTempPlayer) {
+                if (iteration++ < ships[playerShip].engineTemp) {
                     setTimeout(repeatSequence, speed);  
-                } else if (iteration == engineTempPlayer + 1) {
+                } else if (iteration == ships[playerShip].engineTemp + 1) {
                     iteration = 1;
                     ableInput();
                     $(".statusBox").animate({
@@ -318,31 +322,31 @@
             }
 
             function drawStatus() {
-                $(".displayTemp").html("Temp: " + engineTempPlayer);
-                $(".displayHealth").html("HP: " + healthPlayer);
-                $(".displayHealthE").html("Enemy HP: " + healthEnemy);
-                $(".displayTempEnemy").html("Enemy Temp: " + engineTempEnemy);
-                $(".displayEnergy").html("Energy: " + energyPlayer);
-                $(".displayEnergyEnemy").html("Enemy Energy: " + energyEnemy);
+                $(".displayTemp").html("Temp: " + ships[playerShip].engineTemp);
+                $(".displayHealth").html("HP: " + ships[playerShip].hp);
+                $(".displayHealthE").html("Enemy HP: " + ships[enemyShip].hp);
+                $(".displayTempEnemy").html("Enemy Temp: " + ships[enemyShip].engineTemp);
+                $(".displayEnergy").html("Energy: " + ships[playerShip].energy);
+                $(".displayEnergyEnemy").html("Enemy Energy: " + ships[enemyShip].energy);
             }
 
             function drawWeaponMenu() {
-                for (var i = 0; i < ships[0].weapons.length; i++) {
-                    $(".weaponMenu").append("<button class='weapons' id='" + ships[0].weapons[i].name + "'>" + ships[0].weapons[i].name + "</button>");
+                for (var i = 0; i < ships[playerShip].weapons.length; i++) {
+                    $(".weaponMenu").append("<button class='weapons' id='" + ships[playerShip].weapons[i].name + "'>" + ships[playerShip].weapons[i].name + "</button>");
                     $(".weaponMenu").css("display", "block");
-                    console.log(ships[0].weapons[i].name);
+                    console.log(ships[playerShip].weapons[i].name);
                 }
                 $(".weapons").click(function(e) {
-                    for (var i = 0; i < ships[0].weapons.length; i++) {
-                        if ($(this).attr('id') == ships[0].weapons[i].name) {
-                            console.log(ships[0].weapons[i]);
-                            healthEnemy -= ships[0].weapons[i].damage;
-                            energyPlayer -= ships[0].weapons[i].energyCost;
-                            engineTempPlayer += ships[0].weapons[i].heatGeneration;
-                            ships[0].weapons[i].special();
-                            ships[0].weapons[i].animation();
+                    for (var i = 0; i < ships[playerShip].weapons.length; i++) {
+                        if ($(this).attr('id') == ships[playerShip].weapons[i].name) {
+                            console.log(ships[playerShip].weapons[i]);
+                            ships[enemyShip].hp -= ships[playerShip].weapons[i].damage;
+                            ships[playerShip].energy -= ships[playerShip].weapons[i].energyCost;
+                            ships[playerShip].engineTemp += ships[playerShip].weapons[i].heatGeneration;
+                            ships[playerShip].weapons[i].special();
+                            ships[playerShip].weapons[i].animation();
                             drawStatus();
-                            $(".battleLog").html("You use " + ships[0].weapons[i].name);
+                            $(".battleLog").html("You use " + ships[playerShip].weapons[i].name);
                             $(".weaponMenu").html("");
                             $(".weaponMenu").css("display", "none");
                             startSequence();
@@ -355,20 +359,20 @@
             function enemyTurn() {
                 enemyTurnCounter--;
                 console.log(enemyTurnCounter);
-                var enemyChoice = Math.floor((Math.random() * (ships[1].weapons.length - 1)) + 1);
-                if (engineTempEnemy > 7 && enemyTurnCounter == 0) {
-                    ships[1].weapons[0].special();
+                var enemyChoice = Math.floor((Math.random() * (ships[enemyShip].weapons.length - 1)) + 1);
+                if (ships[enemyShip].engineTemp > 7 && enemyTurnCounter == 0) {
+                    ships[enemyShip].weapons[0].special();
                     drawStatus();
                     enemyTurnCounter = 5;
                 } else if (enemyTurnCounter == 0) {
-                    healthPlayer -= ships[1].weapons[enemyChoice].damage;
-                    energyEnemy -= ships[1].weapons[enemyChoice].energyCost;
-                    engineTempEnemy += ships[1].weapons[enemyChoice].heatGeneration;
-                    ships[1].weapons[enemyChoice].special();
-                    ships[1].weapons[enemyChoice].animation();
+                    ships[playerShip].hp -= ships[enemyShip].weapons[enemyChoice].damage;
+                    ships[enemyShip].energy -= ships[enemyShip].weapons[enemyChoice].energyCost;
+                    ships[enemyShip].engineTemp += ships[enemyShip].weapons[enemyChoice].heatGeneration;
+                    ships[enemyShip].weapons[enemyChoice].special();
+                    ships[enemyShip].weapons[enemyChoice].animation();
                     enemyTurnCounter = 5;
                     drawStatus();
-                    $(".battleLog").html("The enemy uses " + ships[0].weapons[enemyChoice].name);
+                    $(".battleLog").html("The enemy uses " + ships[enemyShip].weapons[enemyChoice].name);
                 }
             }
 
