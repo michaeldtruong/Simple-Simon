@@ -30,6 +30,25 @@
 	background-color: gray;
 }
 
+.weapons {
+	display: block;
+	width: 150px;
+}
+
+.battleLog {
+	position: absolute;
+	left: 480px;
+	top: 200px;
+	width: 260px;
+}
+
+.repeat {
+	position: absolute;
+	top: -45px;
+	left: 150px;
+	width: 50px;
+	height: 30px;
+}
 #but1 {
 	background-color: green;
 
@@ -52,16 +71,4 @@
 
 #green:hover {
 	opacity: 0.5;
-}
-
-.weapons {
-	display: block;
-	width: 150px;
-}
-
-.battleLog {
-	position: absolute;
-	left: 480px;
-	top: 200px;
-	width: 260px;
 }

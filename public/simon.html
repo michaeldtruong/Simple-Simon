@@ -14,13 +14,14 @@
         <div class="container">
             <div class="debug">
                 <button id="playSequence">Play Sequence</button>
-                <div id="displayHealth"></div>
-                <div id="displayTemp"></div>
-                <div id="displayHealthE"></div>
-                <div id="displayTempEnemy"></div>
+                <div class="displayHealth"></div>
+                <div class="displayTemp"></div>
+                <div class="displayHealthE"></div>
+                <div class="displayTempEnemy"></div>
             </div>
             <div class="shipMain">
                 <div class="statusBox"></div>
+                <button class="repeat"></button>
                 <button class ="buttons" id="but1"></button>
                 <button class ="buttons" id="but2"></button>
                 <button class ="buttons" id="but3"></button>
@@ -161,7 +162,7 @@
                     ]
                 }
             ];
-            
+
             var sequence = [];
             var healthPlayer = ships[0].hp;
             var healthEnemy = ships[1].hp;
@@ -241,8 +242,8 @@
 
             function startSequence() {
                 $(".statusBox").animate({
-                        backgroundColor: "yellow"
-                     }, 70);
+                    backgroundColor: "yellow"
+                    }, 70);
                 disableInput();
                 var step = Math.floor((Math.random() * 4) + 1);
                 sequence.push(step);
@@ -250,7 +251,23 @@
                 console.log(sequence);
                 if (iteration++ < engineTemp) {
                     setTimeout(startSequence, speed);
-                    
+                } else if (iteration == engineTemp + 1) {
+                    iteration = 1;
+                    ableInput();
+                    $(".statusBox").animate({
+                        backgroundColor: "green"
+                     }, 70);
+                }
+            }
+
+            function repeatSequence() {
+                $(".statusBox").animate({
+                    backgroundColor: "yellow"
+                    }, 70);
+                disableInput();
+                outputSequence(sequence[iteration - 1]);
+                if (iteration++ < engineTemp) {
+                    setTimeout(repeatSequence, speed);  
                 } else if (iteration == engineTemp + 1) {
                     iteration = 1;
                     ableInput();
@@ -261,10 +278,10 @@
             }
 
             function drawStatus() {
-                $("#displayTemp").html("Temp: " + engineTemp);
-                $("#displayHealth").html("HP: " + healthPlayer);
-                $("#displayHealthE").html("Enemy HP: " + healthEnemy);
-                $("#displayTempEnemy").html("Enemy Temp: " + engineTempEnemy);
+                $(".displayTemp").html("Temp: " + engineTemp);
+                $(".displayHealth").html("HP: " + healthPlayer);
+                $(".displayHealthE").html("Enemy HP: " + healthEnemy);
+                $(".displayTempEnemy").html("Enemy Temp: " + engineTempEnemy);
             }
 
             function drawWeaponMenu() {
@@ -300,7 +317,6 @@
                     ships[1].weapons[0].special();
                     drawStatus();
                     enemyTurnCounter = 5;
-                    // console.log("Force-Coolant")
                 } else if (enemyTurnCounter == 0) {
                     healthPlayer -= ships[1].weapons[enemyChoice].damage;
                     engineTempEnemy += ships[1].weapons[enemyChoice].heatGeneration;
@@ -309,7 +325,6 @@
                     enemyTurnCounter = 5;
                     drawStatus();
                     $(".battleLog").html("The enemy uses " + ships[0].weapons[enemyChoice].name);
-                    // console.log(enemyChoice);
                 }
             }
 
@@ -335,6 +350,9 @@
             $("#playSequence").click(function(e) {
                 startSequence();
                 runEnemyTurn();
+            });
+            $(".repeat").click(function(e) {
+                repeatSequence();
             });
 
         </script>
