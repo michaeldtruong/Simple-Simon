@@ -68,7 +68,7 @@
                         }, {
                             "name": "Restore-Energy",
                             "damage": 0,
-                            "energyCost": -3,
+                            "energyCost": 0,
                             "heatGeneration": 0,
                             "castingTime": 0,
                             "coolDown": 0,
@@ -277,7 +277,6 @@
                 } else {
                     console.log("wrong");
                 } if (sequence.length == 0) {
-                    console.log("got it");
                     disableInput();
                     drawWeaponMenu();
                     clearInterval(enemyTurnTimer);
@@ -334,12 +333,13 @@
                 for (var i = 0; i < ships[playerShip].weapons.length; i++) {
                     $(".weaponMenu").append("<button class='weapons' id='" + ships[playerShip].weapons[i].name + "'>" + ships[playerShip].weapons[i].name + "</button>");
                     $(".weaponMenu").css("display", "block");
-                    console.log(ships[playerShip].weapons[i].name);
+                    if (ships[playerShip].weapons[i].energyCost > ships[playerShip].energy) {
+                        document.getElementById(ships[playerShip].weapons[i].name).disabled = true;
+                    }
                 }
                 $(".weapons").click(function(e) {
                     for (var i = 0; i < ships[playerShip].weapons.length; i++) {
                         if ($(this).attr('id') == ships[playerShip].weapons[i].name) {
-                            console.log(ships[playerShip].weapons[i]);
                             ships[enemyShip].hp -= ships[playerShip].weapons[i].damage;
                             ships[playerShip].energy -= ships[playerShip].weapons[i].energyCost;
                             ships[playerShip].engineTemp += ships[playerShip].weapons[i].heatGeneration;
@@ -358,9 +358,12 @@
 
             function enemyTurn() {
                 enemyTurnCounter--;
-                console.log(enemyTurnCounter);
-                var enemyChoice = Math.floor((Math.random() * (ships[enemyShip].weapons.length - 1)) + 1);
-                if (ships[enemyShip].engineTemp > 7 && enemyTurnCounter == 0) {
+                var enemyChoice = Math.floor((Math.random() * (ships[enemyShip].weapons.length - 2)) + 2);
+                if (ships[enemyShip].energy < 4 && enemyTurnCounter == 0) {
+                    ships[enemyShip].weapons[1].special();
+                    drawStatus();
+                    enemyTurnCounter = 5;
+                } else if (ships[enemyShip].engineTemp > 6 && enemyTurnCounter == 0) {
                     ships[enemyShip].weapons[0].special();
                     drawStatus();
                     enemyTurnCounter = 5;
@@ -377,7 +380,7 @@
             }
 
             function runEnemyTurn() {
-                enemyTurnTimer = setInterval(enemyTurn, 1000);
+                enemyTurnTimer = setInterval(enemyTurn, 300);
             }
 
             disableInput();
