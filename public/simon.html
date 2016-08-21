@@ -17,16 +17,27 @@
                 <div class="displayHealth"></div>
                 <div class="displayEnergy"></div>
                 <div class="displayHealthE"></div>
-                <div class="displayTempEnemy"></div>
                 <div class="displayEnergyEnemy"></div>
             </div>
+
         <div class="container">
             <div class="enemySide">
                 <img src="/img/exodus.png" class="enemyShipImg">
             </div>
+            <div class="enemyHud">
+                <div class="maxHpBarEnemy">
+                    <div class="currentHpBarEnemy"></div>
+                </div>
+                <div class="maxEnergyBarEnemy">
+                    <div class="currentEnergyBarEnemy"></div>
+                </div>
+                <div class="displayTempEnemy"></div>
+                <img src="/img/tempcircle.jpg" class="tempcircleEnemy">
+            </div>
             <div class="playerSide">
                 <img src="/img/regalia1.png" class="playerShipImg">
             </div>
+
             <div class="hud">
                 <div class="shipMain">
                     <div class="statusBox"></div>
@@ -50,6 +61,7 @@
                     <img src="/img/tempcircle.jpg" class="tempcircle">
                 </dv>
             </div>
+
         </div>
         
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
@@ -352,7 +364,7 @@
                 $(".displayTemp").html(ships[playerShip].engineTemp);
                 $(".displayHealth").html("HP: " + ships[playerShip].hp);
                 $(".displayHealthE").html("Enemy HP: " + ships[enemyShip].hp);
-                $(".displayTempEnemy").html("Enemy Temp: " + ships[enemyShip].engineTemp);
+                $(".displayTempEnemy").html(ships[enemyShip].engineTemp);
                 $(".displayEnergy").html("Energy: " + ships[playerShip].energy);
                 $(".displayEnergyEnemy").html("Enemy Energy: " + ships[enemyShip].energy);
             }
@@ -426,6 +438,14 @@
                $(".currentEnergyBar").animate({
                     height: energyPercent + "%"
                     }, 500);
+               var hpPercentEnemy = (ships[enemyShip].hp / ships[enemyShip].maxHp) * 100;
+               $(".currentHpBarEnemy").animate({
+                    height: hpPercentEnemy + "%"
+                    }, 500);
+               var energyPercentEnemy = (ships[enemyShip].energy / ships[enemyShip].maxEnergy) * 100;
+               $(".currentEnergyBarEnemy").animate({
+                    height: energyPercentEnemy + "%"
+                    }, 500);
 
             }
 
@@ -434,7 +454,7 @@
                     disableInput();
                     clearInterval(enemyTurnTimer);
                     $(".battleLog").append("<div>You Lose</div>");
-                } else if (ships[playerShip].hp <= 0) {
+                } else if (ships[enemyShip].hp <= 0) {
                     disableInput();
                     clearInterval(enemyTurnTimer);
                     $(".battleLog").append("<div>You Win</div>");
