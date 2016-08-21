@@ -15,7 +15,6 @@
             <div class="debug">
                 <button id="playSequence">Play Sequence</button>
                 <div class="displayHealth"></div>
-                <div class="displayTemp"></div>
                 <div class="displayEnergy"></div>
                 <div class="displayHealthE"></div>
                 <div class="displayTempEnemy"></div>
@@ -40,6 +39,16 @@
                 </div>
                 <div class="weaponMenu"></div>
                 <div class="battleLog"></div>
+                <div class="playerStatus">
+                    <div class="maxHpBar">
+                        <div class="currentHpBar"></div>
+                    </div>
+                    <div class="maxEnergyBar">
+                        <div class="currentEnergyBar"></div>
+                    </div>
+                    <div class="displayTemp"></div>
+                    <img src="/img/tempcircle.jpg" class="tempcircle">
+                </dv>
             </div>
         </div>
         
@@ -52,7 +61,9 @@
             var ships = [
                 {
                     "name": "Regalia",
+                    "maxHp": 1200,
                     "hp": 1200,
+                    "maxEnergy": 10,
                     "energy": 10,
                     "speed": 1000,
                     "engineTemp": 1,
@@ -136,8 +147,10 @@
 
                 }, {
                     "name": "Exodus",
+                    "maxHp": 1700,
                     "hp": 1700,
                     "energy": 10,
+                    "maxEnergy": 10,
                     "speed": 1500,
                     "engineTemp": 1,
                     "image": "<img src='/img/exodus.png' id='exodusImg'>",
@@ -288,6 +301,7 @@
                 if (input == sequence[0]) {
                     sequence.shift(sequence[0]);
                     console.log(sequence);
+                    document.getElementsByClassName("repeat")[0].disabled = true;
                 } else {
                     console.log("wrong");
                 } if (sequence.length == 0) {
@@ -335,7 +349,7 @@
             }
 
             function drawStatus() {
-                $(".displayTemp").html("Temp: " + ships[playerShip].engineTemp);
+                $(".displayTemp").html(ships[playerShip].engineTemp);
                 $(".displayHealth").html("HP: " + ships[playerShip].hp);
                 $(".displayHealthE").html("Enemy HP: " + ships[enemyShip].hp);
                 $(".displayTempEnemy").html("Enemy Temp: " + ships[enemyShip].engineTemp);
@@ -364,6 +378,7 @@
                             $(".weaponMenu").html("");
                             $(".weaponMenu").css("display", "none");
                             checkGameOver();
+                            statusBars();
                             startSequence();
                             runEnemyTurn();
                         }
@@ -390,6 +405,7 @@
                     ships[enemyShip].engineTemp += ships[enemyShip].weapons[enemyChoice].heatGeneration;
                     ships[enemyShip].weapons[enemyChoice].special();
                     ships[enemyShip].weapons[enemyChoice].animation();
+                    statusBars();
                     drawStatus();
                     $(".battleLog").append("<div>The enemy uses " + ships[enemyShip].weapons[enemyChoice].name + "</div>");
                     checkGameOver();
@@ -401,13 +417,23 @@
                 enemyTurnTimer = setInterval(enemyTurn, 300);
             }
 
+            function statusBars() {
+               var hpPercent = (ships[playerShip].hp / ships[playerShip].maxHp) * 100;
+               $(".currentHpBar").animate({
+                    height: hpPercent + "%"
+                    }, 500);
+               var energyPercent = (ships[playerShip].energy / ships[playerShip].maxEnergy) * 100;
+               $(".currentEnergyBar").animate({
+                    height: energyPercent + "%"
+                    }, 500);
+
+            }
+
             function checkGameOver() {
                 if (ships[playerShip].hp <= 0) {
                     disableInput();
                     clearInterval(enemyTurnTimer);
                     $(".battleLog").append("<div>You Lose</div>");
-
-
                 } else if (ships[playerShip].hp <= 0) {
                     disableInput();
                     clearInterval(enemyTurnTimer);
