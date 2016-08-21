@@ -17,7 +17,7 @@ body {
 	top: 0px;
 	width: 50%;
 	height: 100%;
-	border: 2px solid blue;
+	border: 2px solid #ddd;
 	background-image: url(/img/dark_mosaic.png);
 	-webkit-animation: backgroundScrollTwo 400s linear infinite;
 	animation: backgroundScrollTwo 400s linear infinite;
@@ -34,7 +34,7 @@ to {background-position: 0 -10000px;}
 	top: 0px;
 	width: 50%;
 	height: 100%;
-	border: 2px solid red;
+	border: 2px solid #ddd;
 	background-image: url(/img/dark_mosaic.png);
     -webkit-animation: backgroundScroll 400s linear infinite;
 	animation: backgroundScroll 400s linear infinite;
@@ -49,6 +49,7 @@ to {background-position: 0 10000px;}
 	position: absolute;
 	top: 80px;
 	left: 180px;
+	transform: rotate(180deg);
 
 }
 
@@ -56,7 +57,6 @@ to {background-position: 0 10000px;}
 	position: absolute;
 	top: 130px;
 	right: 240px;
-	
 }
 
 .hud {
@@ -97,9 +97,37 @@ to {background-position: 0 10000px;}
 	background-color: gray;
 }
 
+.weaponMenu {
+	position: absolute;
+	top: 360px;
+	left: 355px;
+	width: 345px;
+	height: 200px;
+	background-color: black;
+	border: 1px solid #ddd;
+	opacity: 0;
+}
+
+.weaponDescription {
+	position: absolute;
+	top: 230px;
+	left: 355px;
+	width: 345px;
+	height: 70px;
+	border: 1px solid #ddd;
+	background-color: black;
+	opacity: 0;
+}
+
 .weapons {
-	display: block;
 	width: 150px;
+	margin-right: 10px;
+	margin-left: 10px;
+	margin-top: 5px;
+}
+
+.weapons:hover {
+	opacity: 0.7;
 }
 
 .battleLog {
@@ -267,25 +295,22 @@ to {background-position: 0 10000px;}
 }
 
 #but1 {
-	background-color: green;
+	background-color: #004d00;
 
 }
 
 #but2 {
-	background-color: red;
+	background-color: #660000;
 
 }
 
 #but3 {
-	background-color: blue;
+	background-color: #003366;
 
 }
 
 #but4 {
-	background-color: yellow;
+	background-color: #b3b300;
 
 }
 
-#green:hover {
-	opacity: 0.5;
-}

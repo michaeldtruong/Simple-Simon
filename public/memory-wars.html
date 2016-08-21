@@ -5,7 +5,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Simon</title>
+        <title>Memory Wars</title>
         <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Orbitron" rel="stylesheet">
         <link href="/css/simon.css" rel="stylesheet">
@@ -14,15 +14,11 @@
     <body>
             <div class="debug">
                 <button id="playSequence">Play Sequence</button>
-                <div class="displayHealth"></div>
-                <div class="displayEnergy"></div>
-                <div class="displayHealthE"></div>
-                <div class="displayEnergyEnemy"></div>
             </div>
 
         <div class="container">
             <div class="enemySide">
-                <img src="/img/exodus.png" class="enemyShipImg">
+                <div class="enemyShipImg"></div>
             </div>
             <div class="enemyHud">
                 <div class="maxHpBarEnemy">
@@ -35,7 +31,7 @@
                 <img src="/img/tempcircle.jpg" class="tempcircleEnemy">
             </div>
             <div class="playerSide">
-                <img src="/img/regalia1.png" class="playerShipImg">
+                <div class="playerShipImg"></div>
             </div>
 
             <div class="hud">
@@ -48,6 +44,7 @@
                     <button class ="buttons" id="but3"></button>
                     <button class ="buttons" id="but4"></button>
                 </div>
+                <div class="weaponDescription">replace me</div>
                 <div class="weaponMenu"></div>
                 <div class="battleLog"></div>
                 <div class="playerStatus">
@@ -79,10 +76,11 @@
                     "energy": 10,
                     "speed": 1000,
                     "engineTemp": 1,
-                    "image": "<img src='/img/regalia1.png' id='regaliaImg'>",
+                    "image": "<img src='/img/regalia1.png'id='ship0'>",
                     "weapons": [
                         {
                             "name": "Force-Coolant",
+                            "description": "instantly cools down the engine with the cost of energy",
                             "damage": 0,
                             "energyCost": 3,
                             "heatGeneration": 0,
@@ -100,6 +98,7 @@
                             }
                         }, {
                             "name": "Restore-Energy",
+                            "description": "Restores Energy",
                             "damage": 0,
                             "energyCost": 0,
                             "heatGeneration": 0,
@@ -117,6 +116,7 @@
                             }
                         }, {
                             "name": "Proton-Cannon",
+                            "description": "hurts a lot",
                             "damage": 300,
                             "energyCost": 2,
                             "heatGeneration": 3,
@@ -130,6 +130,7 @@
                             } 
                         }, {
                             "name": "Rail-Gun",
+                            "description": "small dmg",
                             "damage": 50,
                             "energyCost": 1,
                             "heatGeneration": 1,
@@ -143,6 +144,7 @@
                             }
                         }, {
                             "name": "Barrier",
+                            "description": "protection",
                             "damage": 0,
                             "energyCost": 2,
                             "heatGeneration": 0,
@@ -165,7 +167,7 @@
                     "maxEnergy": 10,
                     "speed": 1500,
                     "engineTemp": 1,
-                    "image": "<img src='/img/exodus.png' id='exodusImg'>",
+                    "image": "<img src='/img/exodus.png' id='ship1'>",
                     "weapons": [
                         {
                             "name": "Force-Coolant",
@@ -247,13 +249,31 @@
 
             var playerShip = 0;
             var enemyShip = 1;
-            var sequence = [];
             var speed = 400;
-            var iteration = 1;
             var enemyTurnCounter = 5;
             var enemyTurnCounterRestart = 5;
+            var enemySpeed = 500;
+            var wrongInputDelay = 3000;
+            var wrongInputSpeed = 400;
+            var afterWeaponSelectDelay = 300;
+            var buttonsAnimateSpeed = 200;
+            var statusBarsSpeed = 500;
+            var weaponMenuDrawSpeed = 500;
+            var iteration = 1;
+            var sequence = [];
             var enemyTurnTimer;
             var input;
+
+            function drawShips() {
+                for (var i = 0; i < ships.length; i++) {
+                    if (ships[enemyShip] == ships[i]) {
+                        $(".enemyShipImg").html(ships[enemyShip].image)
+                    } else if (ships[playerShip] == ships[i]) {
+                        $(".playerShipImg").html(ships[playerShip].image)
+                    }
+                }
+            }
+
 
             function disableInput() {
                 document.getElementsByClassName("repeat")[0].disabled = true;
@@ -276,30 +296,30 @@
                     case 1:
                      $("#but1").animate({
                         opacity: "0.3"
-                     }, 200).animate({
+                     }, buttonsAnimateSpeed).animate({
                         opacity: "1"
-                     }, 200);
+                     }, buttonsAnimateSpeed);
                      break;
                      case 2:
                      $("#but2").animate({
                         opacity: "0.3"
-                     }, 200).animate({
+                     }, buttonsAnimateSpeed).animate({
                         opacity: "1"
-                     }, 200);
+                     }, buttonsAnimateSpeed);
                      break;
                      case 3:
                      $("#but3").animate({
                         opacity: "0.3"
-                     }, 200).animate({
+                     }, buttonsAnimateSpeed).animate({
                         opacity: "1"
-                     }, 200);
+                     }, buttonsAnimateSpeed);
                      break;
                      case 4:
                      $("#but4").animate({
                         opacity: "0.3"
-                     }, 200).animate({
+                     }, buttonsAnimateSpeed).animate({
                         opacity: "1"
-                     }, 200);
+                     }, buttonsAnimateSpeed);
                      break;
                 }
             }
@@ -307,15 +327,35 @@
             function checkInput(input) {
                 $("#but" + input).animate({
                         opacity: "0.3"
-                     }, 200).animate({
+                     }, buttonsAnimateSpeed).animate({
                         opacity: "1"
-                     }, 200);
+                     }, buttonsAnimateSpeed);
                 if (input == sequence[0]) {
                     sequence.shift(sequence[0]);
                     console.log(sequence);
                     document.getElementsByClassName("repeat")[0].disabled = true;
                 } else {
                     console.log("wrong");
+                    $(".buttons").animate({
+                        backgroundColor: "#333"
+                    }, wrongInputSpeed);
+                    disableInput()
+                    setTimeout(function() {
+                        $("#but1").animate({
+                            backgroundColor: "#004d00"
+                        }, wrongInputSpeed);
+                        $("#but2").animate({
+                            backgroundColor: "#660000"
+                        }, wrongInputSpeed);
+                        $("#but3").animate({
+                            backgroundColor: "#003366"
+                        }, wrongInputSpeed);
+                        $("#but4").animate({
+                            backgroundColor: "#b3b300"
+                        }, wrongInputSpeed);
+                    sequence = [];
+                    }, wrongInputDelay - 600)
+                    setTimeout(startSequence, wrongInputDelay)
                 } if (sequence.length == 0) {
                     disableInput();
                     drawWeaponMenu();
@@ -326,7 +366,7 @@
             function startSequence() {
                 $(".statusBox").animate({
                     backgroundColor: "yellow"
-                    }, 70);
+                }, 70);
                 disableInput();
                 var step = Math.floor((Math.random() * 4) + 1);
                 sequence.push(step);
@@ -360,24 +400,33 @@
                 }
             }
 
-            function drawStatus() {
-                $(".displayTemp").html(ships[playerShip].engineTemp);
-                $(".displayHealth").html("HP: " + ships[playerShip].hp);
-                $(".displayHealthE").html("Enemy HP: " + ships[enemyShip].hp);
-                $(".displayTempEnemy").html(ships[enemyShip].engineTemp);
-                $(".displayEnergy").html("Energy: " + ships[playerShip].energy);
-                $(".displayEnergyEnemy").html("Enemy Energy: " + ships[enemyShip].energy);
-            }
-
             function drawWeaponMenu() {
                 for (var i = 0; i < ships[playerShip].weapons.length; i++) {
                     $(".weaponMenu").append("<button class='weapons' id='" + ships[playerShip].weapons[i].name + "'>" + ships[playerShip].weapons[i].name + "</button>");
-                    $(".weaponMenu").css("display", "block");
                     if (ships[playerShip].weapons[i].energyCost > ships[playerShip].energy) {
                         document.getElementById(ships[playerShip].weapons[i].name).disabled = true;
                     }
+                    $(".weaponMenu").css("display", "block");
+                    $(".weaponDescription").css("display", "block");
+                    $(".weaponMenu").animate({
+                        opacity: "0.8",
+                        top: "340px"
+                    }, weaponMenuDrawSpeed);
+                    $(".weaponDescription").animate({
+                        opacity: "0.8",
+                        top: "250px"
+                    }, weaponMenuDrawSpeed);
                 }
-                $(".weapons").click(function(e) {
+                $(".weapons").hover(function() {
+                    for (var i = 0; i < ships[playerShip].weapons.length; i++) {
+                        if ($(this).attr('id') == ships[playerShip].weapons[i].name) {
+                            $(".weaponDescription").html(ships[playerShip].weapons[i].description);
+                        }
+                    } 
+                }, function() {
+                    $(".weaponDescription").html("");
+                });
+                $(".weapons").click(function() {
                     for (var i = 0; i < ships[playerShip].weapons.length; i++) {
                         if ($(this).attr('id') == ships[playerShip].weapons[i].name) {
                             ships[enemyShip].hp -= ships[playerShip].weapons[i].damage;
@@ -386,13 +435,21 @@
                             ships[playerShip].weapons[i].special();
                             ships[playerShip].weapons[i].animation();
                             drawStatus();
+                            $(".weaponMenu").animate({
+                                opacity: "0",
+                                top: "360px"
+                            }, 100);
+                            $(".weaponDescription").animate({
+                                opacity: "0",
+                                top: "230px"
+                            }, 100);
                             $(".battleLog").append("<div>You use " + ships[playerShip].weapons[i].name + "</div>");
                             $(".weaponMenu").html("");
                             $(".weaponMenu").css("display", "none");
+                            $(".weaponDescription").css("display", "none");
                             checkGameOver();
-                            statusBars();
-                            startSequence();
-                            runEnemyTurn();
+                            setTimeout(startSequence, afterWeaponSelectDelay);
+                            setTimeout(runEnemyTurn, afterWeaponSelectDelay);
                         }
                     }
                 });
@@ -417,7 +474,6 @@
                     ships[enemyShip].engineTemp += ships[enemyShip].weapons[enemyChoice].heatGeneration;
                     ships[enemyShip].weapons[enemyChoice].special();
                     ships[enemyShip].weapons[enemyChoice].animation();
-                    statusBars();
                     drawStatus();
                     $(".battleLog").append("<div>The enemy uses " + ships[enemyShip].weapons[enemyChoice].name + "</div>");
                     checkGameOver();
@@ -426,26 +482,28 @@
             }
 
             function runEnemyTurn() {
-                enemyTurnTimer = setInterval(enemyTurn, 300);
+                enemyTurnTimer = setInterval(enemyTurn, enemySpeed);
             }
 
-            function statusBars() {
-               var hpPercent = (ships[playerShip].hp / ships[playerShip].maxHp) * 100;
-               $(".currentHpBar").animate({
+            function drawStatus() {
+                var hpPercent = (ships[playerShip].hp / ships[playerShip].maxHp) * 100;
+                $(".currentHpBar").animate({
                     height: hpPercent + "%"
-                    }, 500);
+                    }, statusBarsSpeed);
                var energyPercent = (ships[playerShip].energy / ships[playerShip].maxEnergy) * 100;
-               $(".currentEnergyBar").animate({
+                $(".currentEnergyBar").animate({
                     height: energyPercent + "%"
-                    }, 500);
+                    }, statusBarsSpeed);
                var hpPercentEnemy = (ships[enemyShip].hp / ships[enemyShip].maxHp) * 100;
-               $(".currentHpBarEnemy").animate({
+                $(".currentHpBarEnemy").animate({
                     height: hpPercentEnemy + "%"
-                    }, 500);
+                    }, statusBarsSpeed);
                var energyPercentEnemy = (ships[enemyShip].energy / ships[enemyShip].maxEnergy) * 100;
-               $(".currentEnergyBarEnemy").animate({
+                $(".currentEnergyBarEnemy").animate({
                     height: energyPercentEnemy + "%"
-                    }, 500);
+                    }, statusBarsSpeed);
+                $(".displayTemp").html(ships[playerShip].engineTemp);
+                $(".displayTempEnemy").html(ships[enemyShip].engineTemp);
 
             }
 
@@ -462,25 +520,26 @@
             }
 
             disableInput();
+            drawShips();
             drawStatus();
 
-            $("#but1").click(function(e) {
+            $("#but1").click(function() {
                 checkInput(1);
             });
-            $("#but2").click(function(e) {
+            $("#but2").click(function() {
                 checkInput(2);
             });
-            $("#but3").click(function(e) {
+            $("#but3").click(function() {
                 checkInput(3);
             });
-            $("#but4").click(function(e) {
+            $("#but4").click(function() {
                 checkInput(4);
             });
-            $("#playSequence").click(function(e) {
+            $("#playSequence").click(function() {
                 startSequence();
                 runEnemyTurn();
             });
-            $(".repeat").click(function(e) {
+            $(".repeat").click(function() {
                 repeatSequence();
             });
 
