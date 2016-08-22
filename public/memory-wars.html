@@ -8,7 +8,7 @@
         <title>Memory Wars</title>
         <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Orbitron" rel="stylesheet">
-        <link href="/css/simon.css" rel="stylesheet">
+        <link href="/css/memory-wars.css" rel="stylesheet">
 
     </head>
     <body>
@@ -18,6 +18,7 @@
 
         <div class="container">
             <div class="enemySide">
+                <div class="enemySideAlert"></div>
                 <div class="enemyShipImg"></div>
             </div>
             <div class="enemyHud">
@@ -31,12 +32,12 @@
                 <img src="/img/tempcircle.jpg" class="tempcircleEnemy">
             </div>
             <div class="playerSide">
+                <div class="playerSideAlert"></div>
                 <div class="playerShipImg"></div>
             </div>
 
             <div class="hud">
                 <div class="shipMain">
-                    <div class="statusBox"></div>
                     <img src="/img/repeat.png" class="repeatImg">
                     <button class="repeat"></button>
                     <button class ="buttons" id="but1"></button>
@@ -44,7 +45,7 @@
                     <button class ="buttons" id="but3"></button>
                     <button class ="buttons" id="but4"></button>
                 </div>
-                <div class="weaponDescription">replace me</div>
+                <div class="weaponDescription"></div>
                 <div class="weaponMenu"></div>
                 <div class="battleLog"></div>
                 <div class="playerStatus">
@@ -60,7 +61,18 @@
             </div>
 
         </div>
-        
+
+        <audio class="audioBattle"><source src="audio/battle.mp3" type="audio/mpeg"></audio>
+        <audio class="audioConfirm"><source src="audio/confirm.wav" type="audio/wav"></audio>
+        <audio class="audioClick"><source src="audio/click.wav" type="audio/wav"></audio>
+        <audio class="audioCancel"><source src="audio/cancel.wav" type="audio/wav"></audio>
+        <audio class="audioAtk1"><source src="audio/atk1.ogg" type="audio/ogg"></audio>
+        <audio class="audioAtk2"><source src="audio/atk2.ogg" type="audio/ogg"></audio>
+        <audio class="audioAtk3"><source src="audio/atk3.ogg" type="audio/ogg"></audio>
+        <audio class="audioHeal1"><source src="audio/heal1.ogg" type="audio/ogg"></audio>
+        <audio class="audioHeal2"><source src="audio/heal2.ogg" type="audio/ogg"></audio>
+        <audio class="audioBuff1"><source src="audio/buff1.ogg" type="audio/ogg"></audio>
+            
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
         <script   src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"   integrity="sha256-eGE6blurk5sHj+rmkfsGYeKyZx3M4bG+ZlFyA7Kns7E="   crossorigin="anonymous"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
@@ -87,6 +99,7 @@
                             "castingTime": 0,
                             "coolDown": 0,
                             "special": function() {
+                                $(".audioHeal2").trigger("play");
                                 if (ships[0].engineTemp <= 3) {
                                     ships[0].engineTemp = 1;
                                 } else {
@@ -105,6 +118,7 @@
                             "castingTime": 0,
                             "coolDown": 0,
                             "special": function() {
+                                $(".audioHeal1").trigger("play");
                                 if (ships[0].energy >= 7) {
                                     ships[0].energy = 10;
                                 } else {
@@ -123,10 +137,37 @@
                             "castingTime": 2,
                             "coolDown": 0,
                             "special": function() {
-                                console.log("Player: " + this.name + " special");
+                                $(".audioAtk1").trigger("play");
                             },
                             "animation": function() {
-                                console.log("Player: " + this.name + " animation");
+                                $(".audioProton").trigger("play");
+                                if (ships[0] == ships[playerShip]) {
+                                    $(".enemySideAlert").animate({
+                                        opacity: "0.6"
+                                    }, 50).animate({
+                                        opacity: "0"
+                                    }, 50);
+                                    for (var i = 0; i < 4; i++) {
+                                        $(".enemyShipImg").animate({
+                                            opacity: "0.5"
+                                        }, 50).animate({
+                                            opacity: "1"
+                                        }, 50);
+                                    }
+                                } else if (ships[0] == ships[enemyShip]) {
+                                    $(".playerSideAlert").animate({
+                                        opacity: "0.6"
+                                    }, 50).animate({
+                                        opacity: "0"
+                                    }, 50);
+                                    for (var i = 0; i < 4; i++) {
+                                        $(".playerShipImg").animate({
+                                            opacity: "0.5"
+                                        }, 50).animate({
+                                            opacity: "1"
+                                        }, 50);
+                                    }
+                                }
                             } 
                         }, {
                             "name": "Rail-Gun",
@@ -137,10 +178,36 @@
                             "castingTime": 0,
                             "coolDown": 0,
                             "special": function() {
-                                console.log("Player: " + this.name + " special");
+                                $(".audioAtk2").trigger("play");
                             },
                             "animation": function() {
-                                console.log("Player: " + this.name + " animation");
+                                if (ships[0] == ships[playerShip]) {
+                                    $(".enemySideAlert").animate({
+                                        opacity: "0.6"
+                                    }, 50).animate({
+                                        opacity: "0"
+                                    }, 50);
+                                    for (var i = 0; i < 4; i++) {
+                                        $(".enemyShipImg").animate({
+                                            opacity: "0.5"
+                                        }, 50).animate({
+                                            opacity: "1"
+                                        }, 50);
+                                    }
+                                } else if (ships[0] == ships[enemyShip]) {
+                                    $(".playerSideAlert").animate({
+                                        opacity: "0.6"
+                                    }, 50).animate({
+                                        opacity: "0"
+                                    }, 50);
+                                    for (var i = 0; i < 4; i++) {
+                                        $(".playerShipImg").animate({
+                                            opacity: "0.5"
+                                        }, 50).animate({
+                                            opacity: "1"
+                                        }, 50);
+                                    }
+                                }
                             }
                         }, {
                             "name": "Barrier",
@@ -151,7 +218,7 @@
                             "castingTime": 0,
                             "coolDown": 0,
                             "special": function() {
-                                console.log("Player: " + this.name + " special");
+                                $(".audioBuff1").trigger("play");
                             },
                             "animation": function() {
                                 console.log("Player: " + this.name + " animation");
@@ -177,6 +244,7 @@
                             "castingTime": 0,
                             "coolDown": 0,
                             "special": function() {
+                                $(".audioHeal2").trigger("play");
                                 if (ships[1].engineTemp <= 3) {
                                     ships[1].engineTemp = 1;
                                 } else {
@@ -194,6 +262,7 @@
                             "castingTime": 0,
                             "coolDown": 0,
                             "special": function() {
+                                $(".audioHeal1").trigger("play");
                                 if (ships[1].energy >= 7) {
                                     ships[1].energy = 10;
                                 } else {
@@ -211,10 +280,36 @@
                             "castingTime": 2,
                             "coolDown": 0,
                             "special": function() {
-                                console.log("Enemy: " + this.name + " special");
+                                $(".audioAtk1").trigger("play");
                             },
                             "animation": function() {
-                                console.log("Enemy: " + this.name + " animation");
+                                if (ships[1] == ships[playerShip]) {
+                                    $(".enemySideAlert").animate({
+                                        opacity: "0.6"
+                                    }, 50).animate({
+                                        opacity: "0"
+                                    }, 50);
+                                    for (var i = 0; i < 4; i++) {
+                                        $(".enemyShipImg").animate({
+                                            opacity: "0.5"
+                                        }, 50).animate({
+                                            opacity: "1"
+                                        }, 50);
+                                    }
+                                } else if (ships[1] == ships[enemyShip]) {
+                                    $(".playerSideAlert").animate({
+                                        opacity: "0.6"
+                                    }, 50).animate({
+                                        opacity: "0"
+                                    }, 50);
+                                    for (var i = 0; i < 4; i++) {
+                                        $(".playerShipImg").animate({
+                                            opacity: "0.5"
+                                        }, 50).animate({
+                                            opacity: "1"
+                                        }, 50);
+                                    }
+                                }
                             } 
                         }, {
                             "name": "Rail-Gun",
@@ -224,10 +319,36 @@
                             "castingTime": 0,
                             "coolDown": 0,
                             "special": function() {
-                                console.log("Enemy: " + this.name + " special");
+                                $(".audioAtk2").trigger("play");
                             },
                             "animation": function() {
-                                console.log("Enemy: " + this.name + " animation");
+                                if (ships[1] == ships[playerShip]) {
+                                    $(".enemySideAlert").animate({
+                                        opacity: "0.6"
+                                    }, 50).animate({
+                                        opacity: "0"
+                                    }, 50);
+                                    for (var i = 0; i < 4; i++) {
+                                        $(".enemyShipImg").animate({
+                                            opacity: "0.5"
+                                        }, 50).animate({
+                                            opacity: "1"
+                                        }, 50);
+                                    }
+                                } else if (ships[1] == ships[enemyShip]) {
+                                    $(".playerSideAlert").animate({
+                                        opacity: "0.6"
+                                    }, 50).animate({
+                                        opacity: "0"
+                                    }, 50);
+                                    for (var i = 0; i < 4; i++) {
+                                        $(".playerShipImg").animate({
+                                            opacity: "0.5"
+                                        }, 50).animate({
+                                            opacity: "1"
+                                        }, 50);
+                                    }
+                                }
                             }
                         }, {
                             "name": "Particle-Ray",
@@ -237,10 +358,36 @@
                             "castingTime": 0,
                             "coolDown": 0,
                             "special": function() {
-                                console.log("Enemy: " + this.name + " special");
+                                $(".audioAtk3").trigger("play");
                             },
                             "animation": function() {
-                                console.log("Enemy: " + this.name + " animation");
+                                if (ships[1] == ships[playerShip]) {
+                                    $(".enemySideAlert").animate({
+                                        opacity: "0.6"
+                                    }, 50).animate({
+                                        opacity: "0"
+                                    }, 50);
+                                    for (var i = 0; i < 4; i++) {
+                                        $(".enemyShipImg").animate({
+                                            opacity: "0.5"
+                                        }, 50).animate({
+                                            opacity: "1"
+                                        }, 50);
+                                    }
+                                } else if (ships[1] == ships[enemyShip]) {
+                                    $(".playerSideAlert").animate({
+                                        opacity: "0.6"
+                                    }, 50).animate({
+                                        opacity: "0"
+                                    }, 50);
+                                    for (var i = 0; i < 4; i++) {
+                                        $(".playerShipImg").animate({
+                                            opacity: "0.5"
+                                        }, 50).animate({
+                                            opacity: "1"
+                                        }, 50);
+                                    }
+                                }
                             }
                         }
                     ]
@@ -273,7 +420,6 @@
                     }
                 }
             }
-
 
             function disableInput() {
                 document.getElementsByClassName("repeat")[0].disabled = true;
@@ -335,7 +481,11 @@
                     console.log(sequence);
                     document.getElementsByClassName("repeat")[0].disabled = true;
                 } else {
-                    console.log("wrong");
+                    if (ships[playerShip].engineTemp > 1) {
+                    ships[playerShip].engineTemp -= 1;
+                    }
+                    $(".audioCancel").trigger("play");
+                    drawStatus();
                     $(".buttons").animate({
                         backgroundColor: "#333"
                     }, wrongInputSpeed);
@@ -357,6 +507,7 @@
                     }, wrongInputDelay - 600)
                     setTimeout(startSequence, wrongInputDelay)
                 } if (sequence.length == 0) {
+                    $(".audioConfirm").trigger("play");
                     disableInput();
                     drawWeaponMenu();
                     clearInterval(enemyTurnTimer);
@@ -364,9 +515,7 @@
             }
 
             function startSequence() {
-                $(".statusBox").animate({
-                    backgroundColor: "yellow"
-                }, 70);
+                $(".audioBattle").trigger("play");
                 disableInput();
                 var step = Math.floor((Math.random() * 4) + 1);
                 sequence.push(step);
@@ -377,16 +526,10 @@
                 } else if (iteration == ships[playerShip].engineTemp + 1) {
                     iteration = 1;
                     enableInput();
-                    $(".statusBox").animate({
-                        backgroundColor: "green"
-                     }, 70);
                 }
             }
 
             function repeatSequence() {
-                $(".statusBox").animate({
-                    backgroundColor: "yellow"
-                    }, 70);
                 disableInput();
                 outputSequence(sequence[iteration - 1]);
                 if (iteration++ < ships[playerShip].engineTemp) {
@@ -394,9 +537,6 @@
                 } else if (iteration == ships[playerShip].engineTemp + 1) {
                     iteration = 1;
                     enableInput();
-                    $(".statusBox").animate({
-                        backgroundColor: "green"
-                     }, 70);
                 }
             }
 
@@ -429,6 +569,7 @@
                 $(".weapons").click(function() {
                     for (var i = 0; i < ships[playerShip].weapons.length; i++) {
                         if ($(this).attr('id') == ships[playerShip].weapons[i].name) {
+                            $(".audioClick").trigger("play");
                             ships[enemyShip].hp -= ships[playerShip].weapons[i].damage;
                             ships[playerShip].energy -= ships[playerShip].weapons[i].energyCost;
                             ships[playerShip].engineTemp += ships[playerShip].weapons[i].heatGeneration;
@@ -438,11 +579,11 @@
                             $(".weaponMenu").animate({
                                 opacity: "0",
                                 top: "360px"
-                            }, 100);
+                            }, 1);
                             $(".weaponDescription").animate({
                                 opacity: "0",
                                 top: "230px"
-                            }, 100);
+                            }, 1);
                             $(".battleLog").append("<div>You use " + ships[playerShip].weapons[i].name + "</div>");
                             $(".weaponMenu").html("");
                             $(".weaponMenu").css("display", "none");
@@ -504,7 +645,6 @@
                     }, statusBarsSpeed);
                 $(".displayTemp").html(ships[playerShip].engineTemp);
                 $(".displayTempEnemy").html(ships[enemyShip].engineTemp);
-
             }
 
             function checkGameOver() {
