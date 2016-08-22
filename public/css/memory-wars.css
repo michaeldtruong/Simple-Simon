@@ -1,5 +1,5 @@
 body {
-
+	background-image: url(/img/maze.png);
 }
 
 .container {
@@ -47,10 +47,18 @@ to {background-position: 0 10000px;}
 
 .enemyShipImg {
 	position: absolute;
-	top: 80px;
-	left: 180px;
+	width: 390px;
+	height: 450px;
+	top: 10px;
+	left: 115px;
 	transform: rotate(180deg);
 
+}
+
+.enemyShipImg img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .enemySideAlert {
@@ -63,9 +71,18 @@ to {background-position: 0 10000px;}
 
 .playerShipImg {
 	position: absolute;
-	top: 130px;
-	right: 240px;
+	width: 390px;
+	height: 450px;
+	top: 100px;
+	right: 116px;
 }
+
+.playerShipImg img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 
 .playerSideAlert {
 	position: absolute;
@@ -180,7 +197,7 @@ to {background-position: 0 10000px;}
 .maxHpBarEnemy {
 	position: absolute;
 	left: 50px;
-	top: 112px;
+	top: 118px;
 	width: 10px;
 	height: 200px;
 	border-radius: 20px;
@@ -204,7 +221,7 @@ to {background-position: 0 10000px;}
 .maxEnergyBarEnemy {
 	position: absolute;
 	left: 63px;
-	top: 112px;
+	top: 118px;
 	width: 10px;
 	height: 125px;
 	border-radius: 20px;
@@ -226,7 +243,7 @@ to {background-position: 0 10000px;}
 
 .displayTempEnemy {
 	position: absolute;
-	top: 35px;
+	top: 38px;
 	left: 38px;
 	color: #ddd;
 	font-size: 2.5em;
@@ -241,6 +258,9 @@ to {background-position: 0 10000px;}
 	height: 100px;
 	top: 10px;
 	left: 10px;
+	-webkit-animation:spin 60s linear infinite;
+    -moz-animation:spin 60s linear infinite;
+    animation:spin 60s linear infinite;
 }
 
 .playerStatus {
@@ -297,7 +317,14 @@ to {background-position: 0 10000px;}
 	height: 170px;
 	top: 520px;
 	left: 850px;
+	-webkit-animation:spin 60s linear infinite;
+    -moz-animation:spin 60s linear infinite;
+    animation:spin 60s linear infinite;
 }
+
+@-moz-keyframes spin { 100% { -moz-transform: rotate(360deg); } }
+@-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }
+@keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }
 
 .displayTemp {
 	position: absolute;
@@ -309,6 +336,18 @@ to {background-position: 0 10000px;}
 	height: 65px;
 	text-align: center;
 }
+
+.allBoosters {
+	animation-name: example;
+	animation-duration: 0.1s;
+	-webkit-animation-iteration-count: infinite;
+}
+	@keyframes example {
+    0% {opacity: 1;}
+    25% {opacity: 0.5;}
+    50% {opacity: 1;}
+	75% {opacity: 0.5;}
+}	100% {opacity: 1;}
 
 #but1 {
 	background-color: #004d00;
@@ -330,3 +369,86 @@ to {background-position: 0 10000px;}
 
 }
 
+#regaliaBooster0 {
+	position: absolute;
+	width: 20px;
+	top: 330px;
+	left: 200px;
+}
+
+#regaliaBooster1 {
+	position: absolute;
+	width: 20px;
+	top: 328px;
+	left: 134px;
+}
+
+#regaliaBooster2 {
+	position: absolute;
+	width: 20px;
+	top: 330px;
+	left: 171px;
+}
+
+#regaliaBooster3 {
+	position: absolute;
+	width: 20px;
+	top: 328px;
+	left: 238px;
+}
+
+#regaliaBooster4 {
+	position: absolute;
+	width: 20px;
+	top: 310px;
+	left: 115px;
+}
+
+#regaliaBooster5 {
+	position: absolute;
+	width: 20px;
+	top: 310px;
+	left: 258px;
+}
+
+#exodusBooster0 {
+	position: absolute;
+	top: 375px;
+	left: 71px;
+	z-index: 2;
+}
+
+#exodusBooster1 {
+	position: absolute;
+	top: 372px;
+	left: 87px;
+	z-index: 1;
+}
+
+#exodusBooster2 {
+	position: absolute;
+	top: 375px;
+	left: 102px;
+	z-index: 2;
+}
+
+#exodusBooster3 {
+	position: absolute;
+	top: 375px;
+	left: 287px;
+	z-index: 2;
+}
+
+#exodusBooster4 {
+	position: absolute;
+	top: 372px;
+	left: 271px;
+	z-index: 1;
+}
+
+#exodusBooster5 {
+	position: absolute;
+	top: 375px;
+	left: 255px;
+	z-index: 2;
+}
