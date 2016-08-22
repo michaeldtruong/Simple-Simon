@@ -7,8 +7,30 @@ body {
 	height: 700px;
 	position: relative;
 	top: 60px;
-	border: 1px solid black;
 	font-family: 'Orbitron', sans-serif;
+}
+
+.titleBoxOne {
+	position: absolute;
+	top: 90px;
+	left: 300px;
+	width: 300px;
+	height: 200px;
+	padding-top: 180px;
+	padding-left: 130px;
+	border-bottom: 1px solid black;
+
+}
+
+.titleBoxTwo {
+	position: absolute;
+	top: 200px;
+	left: 550px;
+	width: 300px;
+	height: 150px;
+	border-left: 1px solid black;
+	padding-top: 100px;
+	padding-left: 10px;
 }
 
 .enemySide {
@@ -17,9 +39,13 @@ body {
 	top: 0px;
 	width: 50%;
 	height: 100%;
-	border: 2px solid #ddd;
+	border-top: 3px solid #000;
+	border-bottom: 3px solid #000;
+	border-left: 3px solid #000;
+	border-right: 2px solid #ddd;
 	background-image: url(/img/dark_mosaic.png);
 	opacity: 0;
+	display: none;
 	-webkit-animation: backgroundScrollTwo 400s linear infinite;
 	animation: backgroundScrollTwo 400s linear infinite;
 }
@@ -35,9 +61,13 @@ to {background-position: 0 -10000px;}
 	top: 0px;
 	width: 50%;
 	height: 100%;
-	border: 2px solid #ddd;
+	border-top: 3px solid #000;
+	border-bottom: 3px solid #000;
+	border-right: 3px solid #000;
+	border-left: 2px solid #ddd;
 	background-image: url(/img/dark_mosaic.png);
 	opacity: 0;
+	display: none;
     -webkit-animation: backgroundScroll 400s linear infinite;
 	animation: backgroundScroll 400s linear infinite;
 }
@@ -114,6 +144,7 @@ to {background-position: 0 10000px;}
 	width: 420px;
 	height: 50px;
 	opacity: 0;
+	display: none;
 }
 
 .buttons {
@@ -142,6 +173,7 @@ to {background-position: 0 10000px;}
 	background-color: black;
 	border: 1px solid #ddd;
 	opacity: 0;
+	display: none;
 }
 
 .weaponDescription {
@@ -157,6 +189,7 @@ to {background-position: 0 10000px;}
 	font-family: sans-serif;
 	color: #ddd;
 	opacity: 0;
+	display: none;
 }
 
 .weapons {
@@ -184,6 +217,7 @@ to {background-position: 0 10000px;}
 	padding: 10px;
 	background-image: url(/img/px.png);
 	opacity: 0;
+	display: none;
 }
 
 .battleLogTitle {
@@ -194,6 +228,7 @@ to {background-position: 0 10000px;}
 	font-size: 1.2em;
 	color: #ddd;
 	opacity: 0;
+	display: none
 }
 
 .repeat {
@@ -218,6 +253,7 @@ to {background-position: 0 10000px;}
 	position: absolute;
 	left: -30px;
 	opacity: 0;
+	display: none;
 }
 
 .maxHpBarEnemy {
@@ -294,6 +330,7 @@ to {background-position: 0 10000px;}
 	top: 0px;
 	left: 30px;
 	opacity: 0;
+	display: none
 }
 
 .maxHpBar {
@@ -478,4 +515,15 @@ to {background-position: 0 10000px;}
 	top: 375px;
 	left: 255px;
 	z-index: 2;
+}
+
+#playSequence {
+	border: 0px;
+	width: 40px;
+	background-color: none;
+	cursor: pointer;
+}
+
+#playSequence:hover {
+	color: #888;
 }

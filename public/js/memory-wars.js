@@ -1,3 +1,5 @@
+(function () {
+
 "use strict";
 
     var ships = [
@@ -436,6 +438,21 @@
     var input;
 
     function initBattle() {
+        $(".titleBoxOne").animate({
+            opacity: "0",
+            left: "320px"
+        });
+        $(".titleBoxTwo").animate({
+            opacity: "0",
+            left: "540px"
+        });
+        $(".enemySide").css("display", "block");
+        $(".playerSide").css("display", "block");
+        $(".playerStatus").css("display", "block");
+        $(".battleLog").css("display", "block");
+        $(".battleLogTitle").css("display", "block");
+        $(".enemyHud").css("display", "block");
+        $(".shipMain").css("display", "block");
         $(".audioBattle").trigger("play");
         $(".enemySide").animate({
             opacity: "1",
@@ -755,3 +772,5 @@
     $(".repeat").click(function() {
         repeatSequence();
     });
+
+})();
