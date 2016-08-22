@@ -410,21 +410,21 @@
     ];
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////// Configuration ///////////////////////////////////////////////
+    /////////////////////////////////////////////////// Configuration //////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    var playerShip = 0; //change player ship default 0
-    var enemyShip = 1; //change enemy ship default 1
-    var speed = 400; //speed between each button in a sequence default 400
-    var enemyTurnCounter = 5; //counter that dictates when the enemy will move default 5
-    var enemyTurnCounterRestart = 5; //counter that dictates when the enemy will move default 5
-    var enemySpeed = 500; // speed in which the the enemy counter gets counted default 500
-    var wrongInputDelay = 3000; // delay before a new sequence is outputed after player fails default 3000
-    var wrongInputSpeed = 400; // animation speed of buttons player fails default 400
-    var afterWeaponSelectDelay = 300; // delay between after player selects weapon and the start of next sequence default 300
-    var buttonsAnimateSpeed = 200; //speed how button animation when output sequence and input by player default 200
-    var statusBarsSpeed = 500; // speed of hp and energy animation default 500
-    var weaponMenuDrawSpeed = 500; // speed on how fast the weapon menu is drawn defualt 500
+    var playerShip = 0;                 //change player ship default 0
+    var enemyShip = 1;                  //change enemy ship default 1
+    var speed = 400;                    //speed between each button in a sequence default 400
+    var enemyTurnCounter = 5;           //counter that dictates when the enemy will move default 5
+    var enemyTurnCounterRestart = 5;    //counter that dictates when the enemy will move default 5
+    var enemySpeed = 500;               //speed in which the the enemy counter gets counted default 500
+    var wrongInputDelay = 3000;         //delay before a new sequence is outputed after player fails default 3000
+    var wrongInputSpeed = 400;          //animation speed of buttons player fails default 400
+    var afterWeaponSelectDelay = 300;   //delay between after player selects weapon and the start of next sequence default 300
+    var buttonsAnimateSpeed = 200;      //speed how button animation when output sequence and input by player default 200
+    var statusBarsSpeed = 500;          //speed of hp and energy animation default 500
+    var weaponMenuDrawSpeed = 500;      //speed on how fast the weapon menu is drawn defualt 500
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////// Configuration End //////////////////////////////////////////////
@@ -434,6 +434,36 @@
     var sequence = [];
     var enemyTurnTimer;
     var input;
+
+    function initBattle() {
+        $(".audioBattle").trigger("play");
+        $(".enemySide").animate({
+            opacity: "1",
+        }, 1200);
+        $(".playerSide").animate({
+            opacity: "1",
+        }, 1200);
+        $(".playerStatus").animate({
+            opacity: "1",
+            left: "0px"
+        }, 2000);
+        $(".battleLog").animate({
+            opacity: "1",
+            left: "30px"
+        }, 1200);
+        $(".battleLogTitle").animate({
+            opacity: "1"
+        }, 3000);
+        $(".enemyHud").animate({
+            opacity: "1",
+            left: "0px"
+        }, 2000);
+        $(".shipMain").animate({
+            opacity: "1",
+            top: "590px"
+        }, 3000)
+
+    }
 
     function drawShips() {
         for (var i = 0; i < ships.length; i++) {
@@ -553,7 +583,6 @@
     }
 
     function startSequence() {
-        $(".audioBattle").trigger("play");
         disableInput();
         var step = Math.floor((Math.random() * 4) + 1);
         sequence.push(step);
@@ -718,8 +747,9 @@
         checkInput(4);
     });
     $("#playSequence").click(function() {
-        startSequence();
-        runEnemyTurn();
+        initBattle();
+        setTimeout(startSequence, 1000);
+        setTimeout(runEnemyTurn, 3000);
         $(".debug").css("display", "none");
     });
     $(".repeat").click(function() {

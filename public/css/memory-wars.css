@@ -19,6 +19,7 @@ body {
 	height: 100%;
 	border: 2px solid #ddd;
 	background-image: url(/img/dark_mosaic.png);
+	opacity: 0;
 	-webkit-animation: backgroundScrollTwo 400s linear infinite;
 	animation: backgroundScrollTwo 400s linear infinite;
 }
@@ -36,6 +37,7 @@ to {background-position: 0 -10000px;}
 	height: 100%;
 	border: 2px solid #ddd;
 	background-image: url(/img/dark_mosaic.png);
+	opacity: 0;
     -webkit-animation: backgroundScroll 400s linear infinite;
 	animation: backgroundScroll 400s linear infinite;
 }
@@ -108,9 +110,10 @@ to {background-position: 0 10000px;}
 .shipMain {
 	position: absolute;
 	left: 320px;
-	top: 590px;
+	top: 620px;
 	width: 420px;
 	height: 50px;
+	opacity: 0;
 }
 
 .buttons {
@@ -169,24 +172,28 @@ to {background-position: 0 10000px;}
 
 .battleLog {
 	position: absolute;
-	left: 30px;
+	left: 0px;
 	top: 540px;
 	width: 260px;
 	height: 140px;
-	font-size: 0.8em;
+	font-size: 1em;
 	overflow: auto;
 	border: 1px solid gray;
 	color: white;
+	font-family: sans-serif;
+	padding: 10px;
 	background-image: url(/img/px.png);
+	opacity: 0;
 }
 
 .battleLogTitle {
 	position: absolute;
-	top: 500px;
-	left: 75px;
+	top: 518px;
+	left: 70px;
 	width: 200px;
-	font-size: 2em;
+	font-size: 1.2em;
 	color: #ddd;
+	opacity: 0;
 }
 
 .repeat {
@@ -205,6 +212,12 @@ to {background-position: 0 10000px;}
 	left: 428px;
 	width: 50px;
 	height: 50px;
+}
+
+.enemyHud {
+	position: absolute;
+	left: -30px;
+	opacity: 0;
 }
 
 .maxHpBarEnemy {
@@ -279,7 +292,8 @@ to {background-position: 0 10000px;}
 .playerStatus {
 	position: absolute;
 	top: 0px;
-	left: 0px;
+	left: 30px;
+	opacity: 0;
 }
 
 .maxHpBar {
