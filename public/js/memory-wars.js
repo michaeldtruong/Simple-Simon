@@ -553,7 +553,7 @@
     }
 
     function startSequence() {
-        // $(".audioBattle").trigger("play");
+        $(".audioBattle").trigger("play");
         disableInput();
         var step = Math.floor((Math.random() * 4) + 1);
         sequence.push(step);
@@ -720,6 +720,7 @@
     $("#playSequence").click(function() {
         startSequence();
         runEnemyTurn();
+        $(".debug").css("display", "none");
     });
     $(".repeat").click(function() {
         repeatSequence();
