@@ -149,6 +149,10 @@ to {background-position: 0 10000px;}
 	height: 70px;
 	border: 1px solid #ddd;
 	background-color: black;
+	padding-left: 10px;
+	padding-top: 3px;
+	font-family: sans-serif;
+	color: #ddd;
 	opacity: 0;
 }
 
@@ -174,6 +178,15 @@ to {background-position: 0 10000px;}
 	border: 1px solid gray;
 	color: white;
 	background-image: url(/img/px.png);
+}
+
+.battleLogTitle {
+	position: absolute;
+	top: 500px;
+	left: 75px;
+	width: 200px;
+	font-size: 2em;
+	color: #ddd;
 }
 
 .repeat {
