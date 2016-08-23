@@ -71,9 +71,9 @@ body {
 	top: 0px;
 	width: 50%;
 	height: 100%;
-	border-top: 3px solid #000;
-	border-bottom: 3px solid #000;
-	border-left: 3px solid #000;
+	border-top: 2px solid #000;
+	border-bottom: 2px solid #000;
+	border-left: 2px solid #000;
 	border-right: 2px solid #ddd;
 	background-image: url(/img/dark_mosaic.png);
 	opacity: 0;
@@ -93,9 +93,9 @@ to {background-position: 0 -10000px;}
 	top: 0px;
 	width: 50%;
 	height: 100%;
-	border-top: 3px solid #000;
-	border-bottom: 3px solid #000;
-	border-right: 3px solid #000;
+	border-top: 2px solid #000;
+	border-bottom: 2px solid #000;
+	border-right: 2px solid #000;
 	border-left: 2px solid #ddd;
 	background-image: url(/img/dark_mosaic.png);
 	opacity: 0;
@@ -171,7 +171,7 @@ to {background-position: 0 10000px;}
 
 .shipMain {
 	position: absolute;
-	left: 320px;
+	left: 322px;
 	top: 620px;
 	width: 420px;
 	height: 50px;
@@ -185,15 +185,6 @@ to {background-position: 0 10000px;}
 	border: 2px solid #ddd;
 	outline: none;
 	border-radius: 5px;
-}
-
-.statusBox {
-	width: 20px;
-	height: 20px;
-	position: absolute;
-	bottom: 70px;
-	left: 52px;
-	background-color: gray;
 }
 
 .weaponMenu {
@@ -265,7 +256,7 @@ to {background-position: 0 10000px;}
 
 .repeat {
 	position: absolute;
-	top: 8px;
+	top: 10px;
 	left: 435px;
 	width: 40px;
 	height: 30px;

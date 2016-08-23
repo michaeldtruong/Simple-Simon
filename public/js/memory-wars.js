@@ -246,10 +246,10 @@
     var buttonsAnimateSpeed = 200;      //speed how button animation when output sequence and input by player default 200
     var statusBarsSpeed = 500;          //speed of hp and energy animation default 500
     var weaponMenuDrawSpeed = 500;      //speed on how fast the weapon menu is drawn defualt 500
-    var btnOneColor = "#004d00"
-    var btnTwoColor = "#660000"
-    var btnThreeColor = "#003366"
-    var btnFourColor = "#808000"
+    var btnOneColor = "#004d00"         //color displayed for button 1 default #004d00
+    var btnTwoColor = "#660000"         //color displayed for button 2 default #660000
+    var btnThreeColor = "#003366"       //color displayed for button 3 default #003366
+    var btnFourColor = "#808000"        //color displayed for button 4 default #808000
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////// Configuration End //////////////////////////////////////////////
@@ -315,19 +315,16 @@
                 opacity: "1"
             }, 5000);
         setTimeout(function() {
+            $(".audioBattle").trigger("pause");
+            $(".audioBattle").animate({volume: 1}, 100);
+            $(".audioBattle").prop("currentTime", 0);
             $(".coverText").css("display", "block");
             $(".coverText").animate({
                 opacity: "1"
             }, 3000);
         }, 6000);
         setTimeout(function() {
-            $(".enemySide").css("display", "none");
-            $(".playerSide").css("display", "none");
-            $(".playerStatus").css("display", "none");
-            $(".battleLog").css("display", "none");
-            $(".battleLogTitle").css("display", "none");
-            $(".enemyHud").css("display", "none");
-            $(".shipMain").css("display", "none");
+            resetBattleScene();
             $(".coverText").animate({
                 opacity: "0"
             }, 3000);
@@ -346,6 +343,9 @@
                 left: "550px"
             }, 4000);
         }, 14000);
+        setTimeout(function() {
+            $(".cover").css("display", "none");
+        }, 18000);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -494,6 +494,32 @@
             $(".audioCollapse1").trigger("play");
             setTimeout(gameOver, 2000);
         }
+    }
+
+    function resetBattleScene() {
+        sequence = [];
+        $(".enemySide").css("opacity", "0");
+        $(".playerSide").css("opacity", "0");
+        $(".playerStatus").css("opacity", "0");
+        $(".battleLog").css("opacity", "0");
+        $(".battleLogTitle").css("opacity", "0");
+        $(".enemyHud").css("opacity", "0");
+        $(".shipMain").css("opacity", "0");
+        $(".playerShipImg").css("opacity", "1");
+        $(".enemyShipImg").css("opacity", "1");
+        $(".playerShipImg").html("");
+        $(".enemyShipImg").html("");
+        $(".enemySide").css("display", "none");
+        $(".playerSide").css("display", "none");
+        $(".playerStatus").css("display", "none");
+        $(".battleLog").css("display", "none");
+        $(".battleLogTitle").css("display", "none");
+        $(".shipMain").css("display", "none");
+        $(".enemyHud").css("display", "none");
+        $(".shipMain").css("top", "620px");
+        $(".playerStatus").css("left", "30px");
+        $(".battleLog").css("left", "0px");
+        $(".enemyHud").css("left", "-30px");
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
