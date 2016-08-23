@@ -246,6 +246,10 @@
     var buttonsAnimateSpeed = 200;      //speed how button animation when output sequence and input by player default 200
     var statusBarsSpeed = 500;          //speed of hp and energy animation default 500
     var weaponMenuDrawSpeed = 500;      //speed on how fast the weapon menu is drawn defualt 500
+    var btnOneColor = "#004d00"
+    var btnTwoColor = "#660000"
+    var btnThreeColor = "#003366"
+    var btnFourColor = "#808000"
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////// Configuration End //////////////////////////////////////////////
@@ -349,6 +353,10 @@
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     function disableInput() {
+        $("#but1").css("backgroundColor", btnOneColor);
+        $("#but2").css("backgroundColor", btnTwoColor);
+        $("#but3").css("backgroundColor", btnThreeColor);
+        $("#but4").css("backgroundColor", btnFourColor);
         document.getElementsByClassName("repeat")[0].disabled = true;
         document.getElementsByClassName("buttons")[0].disabled = true;
         document.getElementsByClassName("buttons")[1].disabled = true;
@@ -361,7 +369,7 @@
         document.getElementsByClassName("buttons")[0].disabled = false;
         document.getElementsByClassName("buttons")[1].disabled = false;
         document.getElementsByClassName("buttons")[2].disabled = false;
-        document.getElementsByClassName("buttons")[3].disabled = false;  
+        document.getElementsByClassName("buttons")[3].disabled = false;
     }
 
     function startSequence() {
@@ -433,16 +441,16 @@
             disableInput()
             setTimeout(function() {
                 $("#but1").animate({
-                    backgroundColor: "#004d00"
+                    backgroundColor: btnOneColor
                 }, wrongInputSpeed);
                 $("#but2").animate({
-                    backgroundColor: "#660000"
+                    backgroundColor: btnTwoColor
                 }, wrongInputSpeed);
                 $("#but3").animate({
-                    backgroundColor: "#003366"
+                    backgroundColor: btnThreeColor
                 }, wrongInputSpeed);
                 $("#but4").animate({
-                    backgroundColor: "#b3b300"
+                    backgroundColor: btnFourColor
                 }, wrongInputSpeed);
             sequence = [];
             }, wrongInputDelay - 600)
@@ -666,13 +674,26 @@
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////// On Page Load /////////////////////////////////////////////////
+    //////////////////////////////////////////////////// On Page Load //////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    disableInput();
-    drawShips();
-    drawStatus();
+    $("#but1").css("backgroundColor", btnOneColor);
+    $("#but2").css("backgroundColor", btnTwoColor);
+    $("#but3").css("backgroundColor", btnThreeColor);
+    $("#but4").css("backgroundColor", btnFourColor);
 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////// Event Listeners ////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    $("#playSequence").click(function() {
+        disableInput();
+        drawShips();
+        drawStatus();
+        initBattle();
+        setTimeout(startSequence, 3000);
+        setTimeout(runEnemyTurn, 3000);
+    });
     $("#but1").click(function() {
         checkInput(1);
     });
@@ -685,13 +706,53 @@
     $("#but4").click(function() {
         checkInput(4);
     });
-    $("#playSequence").click(function() {
-        initBattle();
-        setTimeout(startSequence, 3000);
-        setTimeout(runEnemyTurn, 3000);
-    });
     $(".repeat").click(function() {
         repeatSequence();
+    });
+    $(".repeat").hover(function() {
+        $(".repeat").animate({
+            opacity: "0.5"
+        }, 250);
+    }, function() {
+        $(".repeat").animate({
+            opacity: "1"
+        }, 250);
+    });
+    $("#but1").hover(function() {
+        $("#but1").animate({
+            backgroundColor: "#00ff00"
+        }, 250);
+    }, function() {
+        $("#but1").animate({
+            backgroundColor: "#004d00"
+        }, 250)
+    });
+    $("#but2").hover(function() {
+        $("#but2").animate({
+            backgroundColor: "#ff0000"
+        }, 250);
+    }, function() {
+        $("#but2").animate({
+            backgroundColor: "#660000"
+        }, 250)
+    });
+    $("#but3").hover(function() {
+        $("#but3").animate({
+            backgroundColor: "#0000ff"
+        }, 250);
+    }, function() {
+        $("#but3").animate({
+            backgroundColor: "#003366"
+        }, 250)
+    });
+    $("#but4").hover(function() {
+        $("#but4").animate({
+            backgroundColor: "#ffff00"
+        }, 250);
+    }, function() {
+        $("#but4").animate({
+            backgroundColor: "#808000"
+        }, 250)
     });
 
 })();
