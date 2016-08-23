@@ -5,8 +5,8 @@
     var ships = [
         {
             "name": "Regalia",
-            "maxHp": 3000,
-            "hp": 3000,
+            "maxHp": 2000,
+            "hp": 2000,
             "maxEnergy": 1000,
             "energy": 1000,
             "speed": 1000,
@@ -17,9 +17,9 @@
             "weapons": [
                 {
                     "name": "Force-Coolant",
-                    "description": "Instantly reduces engine heat by 3.<br>Energy: 200<br>Heat-Generation: 0",
+                    "description": "Instantly reduces engine heat by 3.<br>Energy: 50<br>Heat-Generation: 0",
                     "damage": 0,
-                    "energyCost": 200,
+                    "energyCost": 50,
                     "heatGeneration": 0,
                     "castingTime": 0,
                     "coolDown": 0,
@@ -44,8 +44,8 @@
                     "coolDown": 0,
                     "special": function() {
                         $(".audioHeal1").trigger("play");
-                        if (ships[0].energy >= 700) {
-                            ships[0].energy = 1000;
+                        if (ships[0].energy >= ships[0].maxEnergy - 300) {
+                            ships[0].energy = ships[0].maxEnergy;
                         } else {
                         ships[0].energy += 300;
                         }
@@ -55,9 +55,9 @@
                     }
                 }, {
                     "name": "Proton-Cannon",
-                    "description": "Deals large amount of damage to enemy.<br>Energy: 300<br>Heat-Generation: 2",
+                    "description": "Deals large amount of damage to enemy.<br>Energy: 225<br>Heat-Generation: 2",
                     "damage": 350,
-                    "energyCost": 300,
+                    "energyCost": 225,
                     "heatGeneration": 2,
                     "castingTime": 2,
                     "coolDown": 0,
@@ -144,10 +144,12 @@
                     "coolDown": 0,
                     "special": function() {
                         $(".audioBuff1").trigger("play");
-                        if (ships[0].hp >= 2700) {
-                            ships[0].hp = 3000;
+                        console.log("test1");
+                        if (ships[0].hp >= ships[0].maxHp - 300) {
+                            ships[0].hp = ships[0].maxHp;
                         } else {
-                        ships[0].hp += 300;
+                            console.log("test1");
+                            ships[0].hp += 300;
                         }
                     },
                     "animation": function() {
@@ -195,9 +197,9 @@
                     }
                 }, {
                     "name": "Psi-Gun",
-                    "description": "Deals large amount of damage to enemy.<br>Energy: 500<br>Heat-Generation: 1",
+                    "description": "Deals large amount of damage to enemy.<br>Energy: 350<br>Heat-Generation: 1",
                     "damage": 350,
-                    "energyCost": 500,
+                    "energyCost": 300,
                     "heatGeneration": 1,
                     "castingTime": 0,
                     "coolDown": 0,
@@ -205,7 +207,7 @@
                         $(".audioAtk1").trigger("play");
                     },
                     "animation": function() {
-                        if (ships[1] == ships[playerShip]) {
+                        if (ships[0] == ships[playerShip]) {
                             $(".enemySideAlert").animate({
                                 opacity: "0.6"
                             }, 50).animate({
@@ -238,8 +240,8 @@
 
         }, {
             "name": "Exodus",
-            "maxHp": 3000,
-            "hp": 3000,
+            "maxHp": 2000,
+            "hp": 2000,
             "energy": 1000,
             "maxEnergy": 1000,
             "speed": 1500,
@@ -252,7 +254,7 @@
                     "name": "Force-Coolant",
                     "description": "",
                     "damage": 0,
-                    "energyCost": 200,
+                    "energyCost": 50,
                     "heatGeneration": 0,
                     "castingTime": 0,
                     "coolDown": 0,
@@ -277,8 +279,8 @@
                     "coolDown": 0,
                     "special": function() {
                         $(".audioHeal1").trigger("play");
-                        if (ships[1].energy >= 700) {
-                            ships[1].energy = 1000;
+                        if (ships[1].energy >= ships[1].maxEnergy - 300) {
+                            ships[1].energy = ships[1].maxEnergy;
                         } else {
                         ships[1].energy += 300;
                         }
@@ -329,7 +331,7 @@
                 }, {
                     "name": "Rail-Gun",
                     "description": "",
-                    "damage": 50,
+                    "damage": 100,
                     "energyCost": 100,
                     "heatGeneration": 1,
                     "castingTime": 0,
@@ -369,7 +371,7 @@
                 }, {
                     "name": "Particle-Ray",
                     "description": "",
-                    "damage": 150,
+                    "damage": 175,
                     "energyCost": 200,
                     "heatGeneration": 1,
                     "castingTime": 0,
@@ -444,7 +446,7 @@
         });
         $(".titleBoxTwo").animate({
             opacity: "0",
-            left: "540px"
+            left: "530px"
         });
         $(".enemySide").css("display", "block");
         $(".playerSide").css("display", "block");
@@ -737,14 +739,64 @@
 
     function checkGameOver() {
         if (ships[playerShip].hp <= 0) {
-            disableInput();
             clearInterval(enemyTurnTimer);
+            disableInput();
             $(".battleLog").append("<div>You Lose</div>");
+            $(".playerShipImg").animate({
+                opacity: "0"
+            }, 2000);
+            $(".audioCollapse1").trigger("play");
+            setTimeout(gameOver, 2000);
         } else if (ships[enemyShip].hp <= 0) {
-            disableInput();
             clearInterval(enemyTurnTimer);
+            disableInput();
             $(".battleLog").append("<div>You Win</div>");
+            $(".enemyShipImg").animate({
+                opacity: "0"
+            }, 2000);
+            $(".audioCollapse1").trigger("play");
+            setTimeout(gameOver, 2000);
         }
+    }
+
+    function gameOver() {
+        $(".audioBattle").animate({volume: 0}, 4000);
+        $(".cover").css("display", "block");
+            $(".cover").animate({
+                opacity: "1"
+            }, 5000);
+        setTimeout(function() {
+            $(".coverText").css("display", "block");
+            $(".coverText").animate({
+                opacity: "1"
+            }, 3000);
+        }, 6000);
+        setTimeout(function() {
+            $(".enemySide").css("display", "none");
+            $(".playerSide").css("display", "none");
+            $(".playerStatus").css("display", "none");
+            $(".battleLog").css("display", "none");
+            $(".battleLogTitle").css("display", "none");
+            $(".enemyHud").css("display", "none");
+            $(".shipMain").css("display", "none");
+            $(".coverText").animate({
+                opacity: "0"
+            }, 3000);
+        }, 11000);
+        setTimeout(function() {
+            $(".coverText").css("display", "none");
+            $(".cover").animate({
+                opacity: "0"
+            }, 2000);
+            $(".titleBoxOne").animate({
+                opacity: "1",
+                left: "300px"
+            }, 4000);
+            $(".titleBoxTwo").animate({
+                opacity: "1",
+                left: "550px"
+            }, 4000);
+        }, 14000);
     }
 
     disableInput();
@@ -765,9 +817,8 @@
     });
     $("#playSequence").click(function() {
         initBattle();
-        setTimeout(startSequence, 1000);
+        setTimeout(startSequence, 3000);
         setTimeout(runEnemyTurn, 3000);
-        $(".debug").css("display", "none");
     });
     $(".repeat").click(function() {
         repeatSequence();
