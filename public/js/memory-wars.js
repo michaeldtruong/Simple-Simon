@@ -65,34 +65,7 @@
                         $(".audioAtk1").trigger("play");
                     },
                     "animation": function() {
-                        $(".audioProton").trigger("play");
-                        if (ships[0] == ships[playerShip]) {
-                            $(".enemySideAlert").animate({
-                                opacity: "0.6"
-                            }, 50).animate({
-                                opacity: "0"
-                            }, 50);
-                            for (var i = 0; i < 4; i++) {
-                                $(".enemyShipImg").animate({
-                                    opacity: "0.5"
-                                }, 50).animate({
-                                    opacity: "1"
-                                }, 50);
-                            }
-                        } else if (ships[0] == ships[enemyShip]) {
-                            $(".playerSideAlert").animate({
-                                opacity: "0.6"
-                            }, 50).animate({
-                                opacity: "0"
-                            }, 50);
-                            for (var i = 0; i < 4; i++) {
-                                $(".playerShipImg").animate({
-                                    opacity: "0.5"
-                                }, 50).animate({
-                                    opacity: "1"
-                                }, 50);
-                            }
-                        }
+                        damagedAnimation(0);
                     } 
                 }, {
                     "name": "Rail-Gun",
@@ -106,33 +79,7 @@
                         $(".audioAtk2").trigger("play");
                     },
                     "animation": function() {
-                        if (ships[0] == ships[playerShip]) {
-                            $(".enemySideAlert").animate({
-                                opacity: "0.6"
-                            }, 50).animate({
-                                opacity: "0"
-                            }, 50);
-                            for (var i = 0; i < 4; i++) {
-                                $(".enemyShipImg").animate({
-                                    opacity: "0.5"
-                                }, 50).animate({
-                                    opacity: "1"
-                                }, 50);
-                            }
-                        } else if (ships[0] == ships[enemyShip]) {
-                            $(".playerSideAlert").animate({
-                                opacity: "0.6"
-                            }, 50).animate({
-                                opacity: "0"
-                            }, 50);
-                            for (var i = 0; i < 4; i++) {
-                                $(".playerShipImg").animate({
-                                    opacity: "0.5"
-                                }, 50).animate({
-                                    opacity: "1"
-                                }, 50);
-                            }
-                        }
+                        damagedAnimation(0);
                     }
                 }, {
                     "name": "Repair-Bots",
@@ -167,33 +114,7 @@
                         $(".audioAtk3").trigger("play");
                     },
                     "animation": function() {
-                        if (ships[0] == ships[playerShip]) {
-                            $(".enemySideAlert").animate({
-                                opacity: "0.6"
-                            }, 50).animate({
-                                opacity: "0"
-                            }, 50);
-                            for (var i = 0; i < 4; i++) {
-                                $(".enemyShipImg").animate({
-                                    opacity: "0.5"
-                                }, 50).animate({
-                                    opacity: "1"
-                                }, 50);
-                            }
-                        } else if (ships[0] == ships[enemyShip]) {
-                            $(".playerSideAlert").animate({
-                                opacity: "0.6"
-                            }, 50).animate({
-                                opacity: "0"
-                            }, 50);
-                            for (var i = 0; i < 4; i++) {
-                                $(".playerShipImg").animate({
-                                    opacity: "0.5"
-                                }, 50).animate({
-                                    opacity: "1"
-                                }, 50);
-                            }
-                        }
+                        damagedAnimation(0);
                     }
                 }, {
                     "name": "Psi-Gun",
@@ -207,33 +128,7 @@
                         $(".audioAtk1").trigger("play");
                     },
                     "animation": function() {
-                        if (ships[0] == ships[playerShip]) {
-                            $(".enemySideAlert").animate({
-                                opacity: "0.6"
-                            }, 50).animate({
-                                opacity: "0"
-                            }, 50);
-                            for (var i = 0; i < 4; i++) {
-                                $(".enemyShipImg").animate({
-                                    opacity: "0.5"
-                                }, 50).animate({
-                                    opacity: "1"
-                                }, 50);
-                            }
-                        } else if (ships[1] == ships[enemyShip]) {
-                            $(".playerSideAlert").animate({
-                                opacity: "0.6"
-                            }, 50).animate({
-                                opacity: "0"
-                            }, 50);
-                            for (var i = 0; i < 4; i++) {
-                                $(".playerShipImg").animate({
-                                    opacity: "0.5"
-                                }, 50).animate({
-                                    opacity: "1"
-                                }, 50);
-                            }
-                        }
+                        damagedAnimation(0);
                     }
                 }
             ]
@@ -300,33 +195,7 @@
                         $(".audioAtk1").trigger("play");
                     },
                     "animation": function() {
-                        if (ships[1] == ships[playerShip]) {
-                            $(".enemySideAlert").animate({
-                                opacity: "0.6"
-                            }, 50).animate({
-                                opacity: "0"
-                            }, 50);
-                            for (var i = 0; i < 4; i++) {
-                                $(".enemyShipImg").animate({
-                                    opacity: "0.5"
-                                }, 50).animate({
-                                    opacity: "1"
-                                }, 50);
-                            }
-                        } else if (ships[1] == ships[enemyShip]) {
-                            $(".playerSideAlert").animate({
-                                opacity: "0.6"
-                            }, 50).animate({
-                                opacity: "0"
-                            }, 50);
-                            for (var i = 0; i < 4; i++) {
-                                $(".playerShipImg").animate({
-                                    opacity: "0.5"
-                                }, 50).animate({
-                                    opacity: "1"
-                                }, 50);
-                            }
-                        }
+                        damagedAnimation(1);
                     } 
                 }, {
                     "name": "Rail-Gun",
@@ -340,33 +209,7 @@
                         $(".audioAtk2").trigger("play");
                     },
                     "animation": function() {
-                        if (ships[1] == ships[playerShip]) {
-                            $(".enemySideAlert").animate({
-                                opacity: "0.6"
-                            }, 50).animate({
-                                opacity: "0"
-                            }, 50);
-                            for (var i = 0; i < 4; i++) {
-                                $(".enemyShipImg").animate({
-                                    opacity: "0.5"
-                                }, 50).animate({
-                                    opacity: "1"
-                                }, 50);
-                            }
-                        } else if (ships[1] == ships[enemyShip]) {
-                            $(".playerSideAlert").animate({
-                                opacity: "0.6"
-                            }, 50).animate({
-                                opacity: "0"
-                            }, 50);
-                            for (var i = 0; i < 4; i++) {
-                                $(".playerShipImg").animate({
-                                    opacity: "0.5"
-                                }, 50).animate({
-                                    opacity: "1"
-                                }, 50);
-                            }
-                        }
+                        damagedAnimation(1);
                     }
                 }, {
                     "name": "Particle-Ray",
@@ -380,33 +223,7 @@
                         $(".audioAtk3").trigger("play");
                     },
                     "animation": function() {
-                        if (ships[1] == ships[playerShip]) {
-                            $(".enemySideAlert").animate({
-                                opacity: "0.6"
-                            }, 50).animate({
-                                opacity: "0"
-                            }, 50);
-                            for (var i = 0; i < 4; i++) {
-                                $(".enemyShipImg").animate({
-                                    opacity: "0.5"
-                                }, 50).animate({
-                                    opacity: "1"
-                                }, 50);
-                            }
-                        } else if (ships[1] == ships[enemyShip]) {
-                            $(".playerSideAlert").animate({
-                                opacity: "0.6"
-                            }, 50).animate({
-                                opacity: "0"
-                            }, 50);
-                            for (var i = 0; i < 4; i++) {
-                                $(".playerShipImg").animate({
-                                    opacity: "0.5"
-                                }, 50).animate({
-                                    opacity: "1"
-                                }, 50);
-                            }
-                        }
+                        damagedAnimation(1);
                     }
                 }
             ]
@@ -438,6 +255,10 @@
     var sequence = [];
     var enemyTurnTimer;
     var input;
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////// Scenes ///////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     function initBattle() {
         $(".titleBoxOne").animate({
@@ -481,32 +302,51 @@
             opacity: "1",
             top: "590px"
         }, 3000)
-
     }
 
-    function drawShips() {
-        for (var i = 0; i < ships.length; i++) {
-            if (ships[enemyShip] == ships[i]) {
-                $(".enemyShipImg").append(ships[enemyShip].image)
-            } if (ships[playerShip] == ships[i]) {
-                $(".playerShipImg").append(ships[playerShip].image)
-            }
-        }
-        for (var i = 0; i < ships[enemyShip].boosterAmount; i++ ) {
-            if (ships[enemyShip] == ships[1]) {
-                $(".enemyShipImg").append(ships[enemyShip].boosters + "id='exodusBooster" + i + "'>");    
-            } if (ships[enemyShip] == ships[0]) {
-                $(".enemyShipImg").append(ships[enemyShip].boosters + "id='regaliaBooster" + i + "'>");   
-            }
-        }
-        for (var i = 0; i < ships[playerShip].boosterAmount; i++ ) {
-            if (ships[playerShip] == ships[1]) {
-                $(".playerShipImg").append(ships[playerShip].boosters + "id='exodusBooster" + i + "'>");    
-            } if (ships[playerShip] == ships[0]) {
-                $(".playerShipImg").append(ships[playerShip].boosters + "id='regaliaBooster" + i + "'>");   
-            }  
-        }
+    function gameOver() {
+        $(".audioBattle").animate({volume: 0}, 4000);
+        $(".cover").css("display", "block");
+            $(".cover").animate({
+                opacity: "1"
+            }, 5000);
+        setTimeout(function() {
+            $(".coverText").css("display", "block");
+            $(".coverText").animate({
+                opacity: "1"
+            }, 3000);
+        }, 6000);
+        setTimeout(function() {
+            $(".enemySide").css("display", "none");
+            $(".playerSide").css("display", "none");
+            $(".playerStatus").css("display", "none");
+            $(".battleLog").css("display", "none");
+            $(".battleLogTitle").css("display", "none");
+            $(".enemyHud").css("display", "none");
+            $(".shipMain").css("display", "none");
+            $(".coverText").animate({
+                opacity: "0"
+            }, 3000);
+        }, 11000);
+        setTimeout(function() {
+            $(".coverText").css("display", "none");
+            $(".cover").animate({
+                opacity: "0"
+            }, 2000);
+            $(".titleBoxOne").animate({
+                opacity: "1",
+                left: "300px"
+            }, 4000);
+            $(".titleBoxTwo").animate({
+                opacity: "1",
+                left: "550px"
+            }, 4000);
+        }, 14000);
     }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////// Events /////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     function disableInput() {
         document.getElementsByClassName("repeat")[0].disabled = true;
@@ -522,6 +362,20 @@
         document.getElementsByClassName("buttons")[1].disabled = false;
         document.getElementsByClassName("buttons")[2].disabled = false;
         document.getElementsByClassName("buttons")[3].disabled = false;  
+    }
+
+    function startSequence() {
+        disableInput();
+        var step = Math.floor((Math.random() * 4) + 1);
+        sequence.push(step);
+        outputSequence(step);  
+        console.log(sequence);
+        if (iteration++ < ships[playerShip].engineTemp) {
+            setTimeout(startSequence, speed);
+        } else if (iteration == ships[playerShip].engineTemp + 1) {
+            iteration = 1;
+            enableInput();
+        }
     }
 
     function outputSequence(step) {
@@ -601,20 +455,6 @@
         }
     }
 
-    function startSequence() {
-        disableInput();
-        var step = Math.floor((Math.random() * 4) + 1);
-        sequence.push(step);
-        outputSequence(step);  
-        console.log(sequence);
-        if (iteration++ < ships[playerShip].engineTemp) {
-            setTimeout(startSequence, speed);
-        } else if (iteration == ships[playerShip].engineTemp + 1) {
-            iteration = 1;
-            enableInput();
-        }
-    }
-
     function repeatSequence() {
         disableInput();
         outputSequence(sequence[iteration - 1]);
@@ -624,6 +464,77 @@
             iteration = 1;
             enableInput();
         }
+    }
+
+    function checkGameOver() {
+        if (ships[playerShip].hp <= 0) {
+            clearInterval(enemyTurnTimer);
+            disableInput();
+            $(".battleLog").append("<div>You Lose</div>");
+            $(".playerShipImg").animate({
+                opacity: "0"
+            }, 2000);
+            $(".audioCollapse1").trigger("play");
+            setTimeout(gameOver, 2000);
+        } else if (ships[enemyShip].hp <= 0) {
+            clearInterval(enemyTurnTimer);
+            disableInput();
+            $(".battleLog").append("<div>You Win</div>");
+            $(".enemyShipImg").animate({
+                opacity: "0"
+            }, 2000);
+            $(".audioCollapse1").trigger("play");
+            setTimeout(gameOver, 2000);
+        }
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////// Draw ///////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    function drawShips() {
+        for (var i = 0; i < ships.length; i++) {
+            if (ships[enemyShip] == ships[i]) {
+                $(".enemyShipImg").append(ships[enemyShip].image)
+            } if (ships[playerShip] == ships[i]) {
+                $(".playerShipImg").append(ships[playerShip].image)
+            }
+        }
+        for (var i = 0; i < ships[enemyShip].boosterAmount; i++ ) {
+            if (ships[enemyShip] == ships[1]) {
+                $(".enemyShipImg").append(ships[enemyShip].boosters + "id='exodusBooster" + i + "'>");    
+            } if (ships[enemyShip] == ships[0]) {
+                $(".enemyShipImg").append(ships[enemyShip].boosters + "id='regaliaBooster" + i + "'>");   
+            }
+        }
+        for (var i = 0; i < ships[playerShip].boosterAmount; i++ ) {
+            if (ships[playerShip] == ships[1]) {
+                $(".playerShipImg").append(ships[playerShip].boosters + "id='exodusBooster" + i + "'>");    
+            } if (ships[playerShip] == ships[0]) {
+                $(".playerShipImg").append(ships[playerShip].boosters + "id='regaliaBooster" + i + "'>");   
+            }  
+        }
+    }
+
+    function drawStatus() {
+        var hpPercent = (ships[playerShip].hp / ships[playerShip].maxHp) * 100;
+        $(".currentHpBar").animate({
+            height: hpPercent + "%"
+            }, statusBarsSpeed);
+       var energyPercent = (ships[playerShip].energy / ships[playerShip].maxEnergy) * 100;
+        $(".currentEnergyBar").animate({
+            height: energyPercent + "%"
+            }, statusBarsSpeed);
+       var hpPercentEnemy = (ships[enemyShip].hp / ships[enemyShip].maxHp) * 100;
+        $(".currentHpBarEnemy").animate({
+            height: hpPercentEnemy + "%"
+            }, statusBarsSpeed);
+       var energyPercentEnemy = (ships[enemyShip].energy / ships[enemyShip].maxEnergy) * 100;
+        $(".currentEnergyBarEnemy").animate({
+            height: energyPercentEnemy + "%"
+            }, statusBarsSpeed);
+        $(".displayTemp").html(ships[playerShip].engineTemp);
+        $(".displayTempEnemy").html(ships[enemyShip].engineTemp);
     }
 
     function drawWeaponMenu() {
@@ -682,6 +593,10 @@
         });
     }
 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////// Computer AI //////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     function enemyTurn() {
         enemyTurnCounter--;
         var enemyChoice = Math.floor((Math.random() * (ships[enemyShip].weapons.length - 2)) + 2);
@@ -716,88 +631,43 @@
         enemyTurnTimer = setInterval(enemyTurn, enemySpeed);
     }
 
-    function drawStatus() {
-        var hpPercent = (ships[playerShip].hp / ships[playerShip].maxHp) * 100;
-        $(".currentHpBar").animate({
-            height: hpPercent + "%"
-            }, statusBarsSpeed);
-       var energyPercent = (ships[playerShip].energy / ships[playerShip].maxEnergy) * 100;
-        $(".currentEnergyBar").animate({
-            height: energyPercent + "%"
-            }, statusBarsSpeed);
-       var hpPercentEnemy = (ships[enemyShip].hp / ships[enemyShip].maxHp) * 100;
-        $(".currentHpBarEnemy").animate({
-            height: hpPercentEnemy + "%"
-            }, statusBarsSpeed);
-       var energyPercentEnemy = (ships[enemyShip].energy / ships[enemyShip].maxEnergy) * 100;
-        $(".currentEnergyBarEnemy").animate({
-            height: energyPercentEnemy + "%"
-            }, statusBarsSpeed);
-        $(".displayTemp").html(ships[playerShip].engineTemp);
-        $(".displayTempEnemy").html(ships[enemyShip].engineTemp);
-    }
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////// Animations ///////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    function checkGameOver() {
-        if (ships[playerShip].hp <= 0) {
-            clearInterval(enemyTurnTimer);
-            disableInput();
-            $(".battleLog").append("<div>You Lose</div>");
-            $(".playerShipImg").animate({
+    function damagedAnimation(shipNumber) {
+        if (ships[shipNumber] == ships[playerShip]) {
+            $(".enemySideAlert").animate({
+                opacity: "0.6"
+            }, 50).animate({
                 opacity: "0"
-            }, 2000);
-            $(".audioCollapse1").trigger("play");
-            setTimeout(gameOver, 2000);
-        } else if (ships[enemyShip].hp <= 0) {
-            clearInterval(enemyTurnTimer);
-            disableInput();
-            $(".battleLog").append("<div>You Win</div>");
-            $(".enemyShipImg").animate({
+            }, 50);
+            for (var i = 0; i < 4; i++) {
+                $(".enemyShipImg").animate({
+                    opacity: "0.5"
+                }, 50).animate({
+                    opacity: "1"
+                }, 50);
+            }
+        } else if (ships[shipNumber] == ships[enemyShip]) {
+            $(".playerSideAlert").animate({
+                opacity: "0.6"
+            }, 50).animate({
                 opacity: "0"
-            }, 2000);
-            $(".audioCollapse1").trigger("play");
-            setTimeout(gameOver, 2000);
+            }, 50);
+            for (var i = 0; i < 4; i++) {
+                $(".playerShipImg").animate({
+                    opacity: "0.5"
+                }, 50).animate({
+                    opacity: "1"
+                }, 50);
+            }
         }
     }
 
-    function gameOver() {
-        $(".audioBattle").animate({volume: 0}, 4000);
-        $(".cover").css("display", "block");
-            $(".cover").animate({
-                opacity: "1"
-            }, 5000);
-        setTimeout(function() {
-            $(".coverText").css("display", "block");
-            $(".coverText").animate({
-                opacity: "1"
-            }, 3000);
-        }, 6000);
-        setTimeout(function() {
-            $(".enemySide").css("display", "none");
-            $(".playerSide").css("display", "none");
-            $(".playerStatus").css("display", "none");
-            $(".battleLog").css("display", "none");
-            $(".battleLogTitle").css("display", "none");
-            $(".enemyHud").css("display", "none");
-            $(".shipMain").css("display", "none");
-            $(".coverText").animate({
-                opacity: "0"
-            }, 3000);
-        }, 11000);
-        setTimeout(function() {
-            $(".coverText").css("display", "none");
-            $(".cover").animate({
-                opacity: "0"
-            }, 2000);
-            $(".titleBoxOne").animate({
-                opacity: "1",
-                left: "300px"
-            }, 4000);
-            $(".titleBoxTwo").animate({
-                opacity: "1",
-                left: "550px"
-            }, 4000);
-        }, 14000);
-    }
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////// On Page Load /////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     disableInput();
     drawShips();
