@@ -2,6 +2,35 @@
 
 "use strict";
 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////// Configuration //////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    var playerShip = 0;                 //change player ship default 0
+    var enemyShip = 1;                  //change enemy ship default 1
+    var speed = 400;                    //speed between each button in a sequence default 400
+    var enemyTurnCounter = 5;           //counter that dictates when the enemy will move default 5
+    var enemyTurnCounterRestart = 5;    //counter that dictates when the enemy will move default 5
+    var enemySpeed = 500;               //speed in which the the enemy counter gets counted default 500
+    var wrongInputDelay = 3000;         //delay before a new sequence is outputed after player fails default 3000
+    var wrongInputSpeed = 400;          //animation speed of buttons player fails default 400
+    var afterWeaponSelectDelay = 300;   //delay between after player selects weapon and the start of next sequence default 300
+    var buttonsAnimateSpeed = 200;      //speed how button animation when output sequence and input by player default 200
+    var statusBarsSpeed = 500;          //speed of hp and energy animation default 500
+    var weaponMenuDrawSpeed = 500;      //speed on how fast the weapon menu is drawn defualt 500
+    var btnOneColor = "#004d00"         //color displayed for button 1 default #004d00
+    var btnTwoColor = "#660000"         //color displayed for button 2 default #660000
+    var btnThreeColor = "#003366"       //color displayed for button 3 default #003366
+    var btnFourColor = "#808000"        //color displayed for button 4 default #808000
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////// Configuration End //////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    var iteration = 1;
+    var sequence = [];
+    var enemyTurnTimer;
+    var input;
     var ships = [
         {
             "name": "Regalia",
@@ -231,36 +260,6 @@
     ];
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    /////////////////////////////////////////////////// Configuration //////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    var playerShip = 0;                 //change player ship default 0
-    var enemyShip = 1;                  //change enemy ship default 1
-    var speed = 400;                    //speed between each button in a sequence default 400
-    var enemyTurnCounter = 5;           //counter that dictates when the enemy will move default 5
-    var enemyTurnCounterRestart = 5;    //counter that dictates when the enemy will move default 5
-    var enemySpeed = 500;               //speed in which the the enemy counter gets counted default 500
-    var wrongInputDelay = 3000;         //delay before a new sequence is outputed after player fails default 3000
-    var wrongInputSpeed = 400;          //animation speed of buttons player fails default 400
-    var afterWeaponSelectDelay = 300;   //delay between after player selects weapon and the start of next sequence default 300
-    var buttonsAnimateSpeed = 200;      //speed how button animation when output sequence and input by player default 200
-    var statusBarsSpeed = 500;          //speed of hp and energy animation default 500
-    var weaponMenuDrawSpeed = 500;      //speed on how fast the weapon menu is drawn defualt 500
-    var btnOneColor = "#004d00"         //color displayed for button 1 default #004d00
-    var btnTwoColor = "#660000"         //color displayed for button 2 default #660000
-    var btnThreeColor = "#003366"       //color displayed for button 3 default #003366
-    var btnFourColor = "#808000"        //color displayed for button 4 default #808000
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    /////////////////////////////////////////////////// Configuration End //////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    var iteration = 1;
-    var sequence = [];
-    var enemyTurnTimer;
-    var input;
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////// Scenes ///////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -305,7 +304,13 @@
         $(".shipMain").animate({
             opacity: "1",
             top: "590px"
-        }, 3000)
+        }, 3000);
+        $(".playerShipImg").animate({
+            top: "100px"
+        }, 15000);
+        $(".enemyShipImg").animate({
+            top: "10px"
+        }, 15000);
     }
 
     function gameOver() {
@@ -498,6 +503,15 @@
 
     function resetBattleScene() {
         sequence = [];
+        ships[playerShip].hp = ships[playerShip].maxHp;
+        ships[enemyShip].hp = ships[enemyShip].maxHp;
+        ships[playerShip].energy = ships[playerShip].maxEnergy;
+        ships[enemyShip].energy = ships[enemyShip].maxEnergy;
+        ships[playerShip].engineTemp = 1;
+        ships[enemyShip].engineTemp = 1;
+        $(".battleLog").html("");
+        $(".playerShipImg").html("");
+        $(".enemyShipImg").html("");
         $(".enemySide").css("opacity", "0");
         $(".playerSide").css("opacity", "0");
         $(".playerStatus").css("opacity", "0");
@@ -507,8 +521,6 @@
         $(".shipMain").css("opacity", "0");
         $(".playerShipImg").css("opacity", "1");
         $(".enemyShipImg").css("opacity", "1");
-        $(".playerShipImg").html("");
-        $(".enemyShipImg").html("");
         $(".enemySide").css("display", "none");
         $(".playerSide").css("display", "none");
         $(".playerStatus").css("display", "none");
@@ -520,6 +532,8 @@
         $(".playerStatus").css("left", "30px");
         $(".battleLog").css("left", "0px");
         $(".enemyHud").css("left", "-30px");
+        $(".playerShipImg").css("top", "200px");
+        $(".enemyShipImg").css("top", "-190px");
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -569,6 +583,8 @@
             }, statusBarsSpeed);
         $(".displayTemp").html(ships[playerShip].engineTemp);
         $(".displayTempEnemy").html(ships[enemyShip].engineTemp);
+        $(".hpDisplay").html(ships[playerShip].hp);
+        $(".energyDisplay").html(ships[playerShip].energy);
     }
 
     function drawWeaponMenu() {
