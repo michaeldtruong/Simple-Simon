@@ -14,7 +14,7 @@
     var enemySpeed = 500;               //speed in which the the enemy counter gets counted default 500
     var wrongInputDelay = 3000;         //delay before a new sequence is outputed after player fails default 3000
     var wrongInputSpeed = 400;          //animation speed of buttons player fails default 400
-    var afterWeaponSelectDelay = 300;   //delay between after player selects weapon and the start of next sequence default 300
+    var afterWeaponSelectDelay = 600;   //delay between after player selects weapon and the start of next sequence default 300
     var buttonsAnimateSpeed = 200;      //speed how button animation when output sequence and input by player default 200
     var statusBarsSpeed = 500;          //speed of hp and energy animation default 500
     var weaponMenuDrawSpeed = 500;      //speed on how fast the weapon menu is drawn defualt 500
@@ -46,6 +46,7 @@
             "weapons": [
                 {
                     "name": "Force-Coolant",
+                    "id": 0,
                     "description": "Instantly reduces engine heat by 3.<br>Energy: 50<br>Heat-Generation: 0",
                     "damage": 0,
                     "energyCost": 50,
@@ -65,6 +66,7 @@
                     }
                 }, {
                     "name": "Restore-Energy",
+                    "id": 1,
                     "description": "Instantly restore 300 energy.<br>Energy: 0<br>Heat-Generation: 1",
                     "damage": 0,
                     "energyCost": 0,
@@ -84,6 +86,7 @@
                     }
                 }, {
                     "name": "Proton-Cannon",
+                    "id": 2,
                     "description": "Deals large amount of damage to enemy.<br>Energy: 225<br>Heat-Generation: 2",
                     "damage": 350,
                     "energyCost": 225,
@@ -92,12 +95,15 @@
                     "coolDown": 0,
                     "special": function() {
                         $(".audioAtk1").trigger("play");
+                        $(".battleLog").append("<div>" + ships[0].weapons[2].damage + "</div>");
                     },
                     "animation": function() {
                         damagedAnimation(0);
+                        damagePopup(0, 2);
                     } 
                 }, {
                     "name": "Rail-Gun",
+                    "id": 3,
                     "description": "Deals small amount of damage to enemy.<br>Energy: 250<br>Heat-Generation: 0",
                     "damage": 100,
                     "energyCost": 250,
@@ -109,9 +115,11 @@
                     },
                     "animation": function() {
                         damagedAnimation(0);
+                        damagePopup(0, 3);
                     }
                 }, {
                     "name": "Repair-Bots",
+                    "id": 4,
                     "description": "Restore moderate amount of HP.<br>Energy: 300<br>Heat-Generation: 1",
                     "damage": 0,
                     "energyCost": 300,
@@ -133,6 +141,7 @@
                     }
                 }, {
                     "name": "Beam-XYZ",
+                    "id": 5,
                     "description": "Deals moderate amount of damage to enemy.<br>Energy: 50<br>Heat-Generation: 2",
                     "damage": 200,
                     "energyCost": 50,
@@ -144,9 +153,11 @@
                     },
                     "animation": function() {
                         damagedAnimation(0);
+                        damagePopup(0, 5);
                     }
                 }, {
                     "name": "Psi-Gun",
+                    "id": 6,
                     "description": "Deals large amount of damage to enemy.<br>Energy: 350<br>Heat-Generation: 1",
                     "damage": 350,
                     "energyCost": 300,
@@ -158,6 +169,7 @@
                     },
                     "animation": function() {
                         damagedAnimation(0);
+                        damagePopup(0, 6);
                     }
                 }
             ]
@@ -176,6 +188,7 @@
             "weapons": [
                 {
                     "name": "Force-Coolant",
+                    "id": 0,
                     "description": "",
                     "damage": 0,
                     "energyCost": 50,
@@ -195,6 +208,7 @@
                     }
                 }, {
                     "name": "Restore-Energy",
+                    "id": 1,
                     "description": "",
                     "damage": 0,
                     "energyCost": 0,
@@ -214,6 +228,7 @@
                     }
                 }, {
                     "name": "Proton-Cannon",
+                    "id": 2,
                     "description": "",
                     "damage": 300,
                     "energyCost": 200,
@@ -225,9 +240,11 @@
                     },
                     "animation": function() {
                         damagedAnimation(1);
+                        damagePopup(1, 2);
                     } 
                 }, {
                     "name": "Rail-Gun",
+                    "id": 3,
                     "description": "",
                     "damage": 100,
                     "energyCost": 100,
@@ -239,9 +256,11 @@
                     },
                     "animation": function() {
                         damagedAnimation(1);
+                        damagePopup(1, 3);
                     }
                 }, {
                     "name": "Particle-Ray",
+                    "id": 4,
                     "description": "",
                     "damage": 175,
                     "energyCost": 200,
@@ -253,6 +272,7 @@
                     },
                     "animation": function() {
                         damagedAnimation(1);
+                        damagePopup(1, 4);
                     }
                 }
             ]
@@ -432,7 +452,6 @@
              }, buttonsAnimateSpeed);
         if (input == sequence[0]) {
             sequence.shift(sequence[0]);
-            console.log(sequence);
             document.getElementsByClassName("repeat")[0].disabled = true;
         } else {
             if (ships[playerShip].engineTemp > 1) {
@@ -712,6 +731,28 @@
                     opacity: "1"
                 }, 50);
             }
+        }
+    }
+
+    function damagePopup(shipNumber, weaponNumber) {
+        if (ships[shipNumber] == ships[playerShip]) {
+            $(".enemyDmgPop").html(ships[shipNumber].weapons[weaponNumber].damage);
+            $(".enemyDmgPop").animate({
+                opacity: "1",
+            }, 100).animate({
+                top: "150px",
+                opacity: "0"
+            }, 1000);
+            $(".enemyDmgPop").css("top", "100px");
+        } else if (ships[shipNumber] == ships[enemyShip]) {
+            $(".playerDmgPop").html(ships[shipNumber].weapons[weaponNumber].damage);
+            $(".playerDmgPop").animate({
+                opacity: "1",
+            }, 100).animate({
+                top: "70px",
+                opacity: "0"
+            }, 1000);
+            $(".playerDmgPop").css("top", "120px");
         }
     }
 
