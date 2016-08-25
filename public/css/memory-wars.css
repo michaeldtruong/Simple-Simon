@@ -304,6 +304,18 @@ to {background-position: 0 10000px;}
 	display: none;
 }
 
+.enemyShipName {
+	position: absolute;
+	top: 178px;
+	left: -32px;
+	width: 150px;
+	height: 40px;
+	color: #ddd;
+	font-size: 1.4em;
+	text-align: right;
+	transform: rotate(270deg);
+}
+
 .maxHpBarEnemy {
 	position: absolute;
 	left: 50px;
@@ -379,6 +391,18 @@ to {background-position: 0 10000px;}
 	left: 30px;
 	opacity: 0;
 	display: none
+}
+
+.playerShipName {
+	position: absolute;
+	top: 270px;
+	left: -70px;
+	width: 200px;
+	height: 40px;
+	color: #ddd;
+	font-size: 2em;
+	text-align: right;
+	transform: rotate(90deg);
 }
 
 .maxHpBar {

@@ -8,6 +8,7 @@
 
     var playerShip = 0;                 //change player ship default 0
     var enemyShip = 1;                  //change enemy ship default 1
+    var turnHoverOn = false;            //turn hover animation on or off default true 
     var speed = 400;                    //speed between each button in a sequence default 400
     var enemyTurnCounter = 5;           //counter that dictates when the enemy will move default 5
     var enemyTurnCounterRestart = 5;    //counter that dictates when the enemy will move default 5
@@ -604,6 +605,8 @@
         $(".displayTempEnemy").html(ships[enemyShip].engineTemp);
         $(".hpDisplay").html(ships[playerShip].hp);
         $(".energyDisplay").html(ships[playerShip].energy);
+        $(".enemyShipName").html(ships[enemyShip].name);
+        $(".playerShipName").html(ships[playerShip].name);
     }
 
     function drawWeaponMenu() {
@@ -801,41 +804,44 @@
             opacity: "1"
         }, 250);
     });
-    $("#but1").hover(function() {
-        $("#but1").animate({
-            backgroundColor: "#00ff00"
-        }, 250);
-    }, function() {
-        $("#but1").animate({
-            backgroundColor: "#004d00"
-        }, 250)
-    });
-    $("#but2").hover(function() {
-        $("#but2").animate({
-            backgroundColor: "#ff0000"
-        }, 250);
-    }, function() {
-        $("#but2").animate({
-            backgroundColor: "#660000"
-        }, 250)
-    });
-    $("#but3").hover(function() {
-        $("#but3").animate({
-            backgroundColor: "#0000ff"
-        }, 250);
-    }, function() {
-        $("#but3").animate({
-            backgroundColor: "#003366"
-        }, 250)
-    });
-    $("#but4").hover(function() {
-        $("#but4").animate({
-            backgroundColor: "#ffff00"
-        }, 250);
-    }, function() {
-        $("#but4").animate({
-            backgroundColor: "#808000"
-        }, 250)
-    });
+
+    if (turnHoverOn == true) {
+        $("#but1").hover(function() {
+            $("#but1").animate({
+                backgroundColor: "#00ff00"
+            }, 250);
+        }, function() {
+            $("#but1").animate({
+                backgroundColor: "#004d00"
+            }, 250)
+        });
+        $("#but2").hover(function() {
+            $("#but2").animate({
+                backgroundColor: "#ff0000"
+            }, 250);
+        }, function() {
+            $("#but2").animate({
+                backgroundColor: "#660000"
+            }, 250)
+        });
+        $("#but3").hover(function() {
+            $("#but3").animate({
+                backgroundColor: "#0000ff"
+            }, 250);
+        }, function() {
+            $("#but3").animate({
+                backgroundColor: "#003366"
+            }, 250)
+        });
+        $("#but4").hover(function() {
+            $("#but4").animate({
+                backgroundColor: "#ffff00"
+            }, 250);
+        }, function() {
+            $("#but4").animate({
+                backgroundColor: "#808000"
+            }, 250)
+        });
+    }
 
 })();
