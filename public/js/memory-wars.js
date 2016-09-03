@@ -328,10 +328,10 @@
         }, 3000);
         $(".playerShipImg").animate({
             top: "100px"
-        }, 15000);
+        }, 3000);
         $(".enemyShipImg").animate({
             top: "10px"
-        }, 15000);
+        }, 3000);
     }
 
     function gameOver() {
