@@ -96,7 +96,6 @@
                     "coolDown": 0,
                     "special": function() {
                         $(".audioAtk1").trigger("play");
-                        $(".battleLog").append("<div>" + ships[0].weapons[2].damage + "</div>");
                     },
                     "animation": function() {
                         damagedAnimation(0);
@@ -129,7 +128,6 @@
                     "coolDown": 0,
                     "special": function() {
                         $(".audioBuff1").trigger("play");
-                        console.log("test1");
                         if (ships[0].hp >= ships[0].maxHp - 300) {
                             ships[0].hp = ships[0].maxHp;
                         } else {
@@ -171,6 +169,30 @@
                     "animation": function() {
                         damagedAnimation(0);
                         damagePopup(0, 6);
+                    }
+                }, {
+                    "name": "Skip-Turn",
+                    "id": 7,
+                    "description": "Restore energy by 100, reduce engine heat by 1.<br>Energy: 0<br>Heat-Generation: 0",
+                    "damage": 0,
+                    "energyCost": 0,
+                    "heatGeneration": 0,
+                    "castingTime": 0,
+                    "coolDown":0,
+                    "special": function() {
+                        if (ships[0].energy >= ships[0].maxEnergy - 100) {
+                            ships[0].energy = ships[0].maxEnergy;
+                        } else {
+                            ships[0].energy += 100;
+                        }
+                        if (ships[0].engineTemp <= 1) {
+                            ships[0].engineTemp = 1;
+                        } else {
+                            ships[0].engineTemp -= 1;
+                        }
+                    },
+                    "animation": function() {
+                        console.log("Player: " + this.name + " animation");
                     }
                 }
             ]
@@ -403,7 +425,6 @@
         var step = Math.floor((Math.random() * 4) + 1);
         sequence.push(step);
         outputSequence(step);  
-        console.log(sequence);
         if (iteration++ < ships[playerShip].engineTemp) {
             setTimeout(startSequence, speed);
         } else if (iteration == ships[playerShip].engineTemp + 1) {
@@ -509,7 +530,7 @@
             }, 2000);
             $(".audioCollapse1").trigger("play");
             setTimeout(gameOver, 2000);
-        } else if (ships[enemyShip].hp <= 0) {
+        } if (ships[enemyShip].hp <= 0) {
             clearInterval(enemyTurnTimer);
             disableInput();
             $(".battleLog").append("<div>You Win</div>");
@@ -657,9 +678,9 @@
                     $(".weaponMenu").html("");
                     $(".weaponMenu").css("display", "none");
                     $(".weaponDescription").css("display", "none");
+                    runEnemyTurn();
                     checkGameOver();
                     setTimeout(startSequence, afterWeaponSelectDelay);
-                    setTimeout(runEnemyTurn, afterWeaponSelectDelay);
                 }
             }
         });
